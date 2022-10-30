@@ -1,1 +1,4 @@
 
+[submodule "Artemis/Artemis/libs/spdlog"]
+	path = Artemis/Artemis/libs/spdlog
+	url = https://github.com/Grobiani/spdlog
