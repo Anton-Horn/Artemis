@@ -4,14 +4,18 @@ architecture "x64"
 startproject "Artemis"
 
 
+outputdir = "%{cfg.buildcfg}-%{cfg.system}"
 
 group "Libs"
 
+include "Artemis/libs/spdlog"
 
 group ""
 
-lib_includes = {}
-
-outputdir = "%{cfg.buildcfg}-%{cfg.system}"
+lib_includes = {
+    "%{wks.location}/Artemis/libs/spdlog/include"
+}
 
 include "Artemis"
+
+

@@ -1,13 +1,18 @@
 #include <iostream>
 #include "Application.h"
 
+#include "Log.h"
+
 int main(int argc, char** argv) {
 
-	std::cout << "Hello from Artemis!";
+	bool stay_open = false;
 
-	Application* app = Application::Create();
-	app->Run();
-	Application::Terminate(app);
+	do {
+		Application* app = Application::Create();
+		app->Run();
+		stay_open = Application::Terminate(app);
+	} 
+	while (stay_open);
 
 	return 0;
 }

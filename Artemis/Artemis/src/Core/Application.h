@@ -9,11 +9,12 @@
 		
 		void Run();
 
-		static void Terminate(Application* application);
+		static bool Terminate(Application* application);
 
 	private:
 
 		bool m_Open = true;
+		bool m_Restart = false;
 
 
 	};
