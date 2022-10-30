@@ -29,8 +29,9 @@ filter "configurations:Dist"
     defines { "ART_DIST" }
 
 filter "system:windows" 
+
     defines {
-        "AT_WINDOWS"
+        "ART_WINDOWS"
     }
 
     --files {}

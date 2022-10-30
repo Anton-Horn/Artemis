@@ -1,0 +1,3 @@
+[submodule "Artemis/Artemis/libs"]
+	path = Artemis/Artemis/libs
+	url = https://github.com/YOU-i-Labs/spdlog
