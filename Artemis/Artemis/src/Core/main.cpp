@@ -1,7 +1,5 @@
-#include <iostream>
-#include "Application.h"
 
-#include "Log.h"
+#include "Application.h"
 
 int main(int argc, char** argv) {
 
@@ -9,6 +7,8 @@ int main(int argc, char** argv) {
 
 	do {
 		Application* app = Application::Create();
+		if (!app) return -1;
+
 		app->Run();
 		stay_open = Application::Terminate(app);
 	} 

@@ -12,10 +12,10 @@ void Log::Create()
 
 	std::vector<spdlog::sink_ptr> sinks;
 	sinks.emplace_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
-	sinks[0]->set_pattern("%^[%T] %n: %v%$");
+	sinks[0]->set_pattern("%^%n: [%T] %v%$");
 
 	sinks.emplace_back(std::make_shared<spdlog::sinks::basic_file_sink_mt>("Artemis.log"));
-	sinks[1]->set_pattern("%^[%T] %n: %v%$");
+	sinks[1]->set_pattern("%^%n: [%T] %v%$");
 
 	s_BaseLogger = std::make_shared<spdlog::logger>("Artemis", sinks.begin(), sinks.end());
 	spdlog::register_logger(s_BaseLogger);

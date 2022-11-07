@@ -8,3 +8,18 @@
 [21:07:24] Artemis: TestLog
 [21:07:24] Artemis: Test Error
 [21:07:24] Artemis: Test Warn
+[23:38:07] Artemis: TestLog
+[23:38:07] Artemis: Test Error
+[23:38:07] Artemis: Test Warn
+[23:18:37] Artemis: false
+[23:20:03] Artemis: Assert: false failed
+[23:22:43] Artemis: Assert: false; Line: 15; File: C:\dev\Artemis\Artemis\Artemis\src\Core\Application.cpp failed
+[23:23:15] Artemis: Assert: false; Line: 15; File: C:\dev\Artemis\Artemis\Artemis\src\Core\Application.cpp failed
+[23:24:39] Artemis: Assert "false" failed! ; [C:\dev\Artemis\Artemis\Artemis\src\Core\Application.cpp:15]
+[23:25:06] Artemis: Assert "true" passed! [C:\dev\Artemis\Artemis\Artemis\src\Core\Application.cpp:15]
+[23:25:34]  : Assert "true" passed! [C:\dev\Artemis\Artemis\Artemis\src\Core\Application.cpp:15]
+[23:25:41]  : Assert "true" passed! [C:\dev\Artemis\Artemis\Artemis\src\Core\Application.cpp:15]
+[23:26:02] [Artemis]: Assert "true" passed! [C:\dev\Artemis\Artemis\Artemis\src\Core\Application.cpp:15]
+[23:26:36] Assert "true" passed! [C:\dev\Artemis\Artemis\Artemis\src\Core\Application.cpp:15]
+[Artemis] [23:27:03] Assert "true" passed! [C:\dev\Artemis\Artemis\Artemis\src\Core\Application.cpp:15]
+Artemis: [23:27:16] Assert "true" passed! [C:\dev\Artemis\Artemis\Artemis\src\Core\Application.cpp:15]
