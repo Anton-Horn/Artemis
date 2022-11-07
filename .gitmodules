@@ -2,3 +2,6 @@
 [submodule "Artemis/Artemis/libs/spdlog"]
 	path = Artemis/Artemis/libs/spdlog
 	url = https://github.com/Grobiani/spdlog
+[submodule "Artemis/Artemis/libs/glfw"]
+	path = Artemis/Artemis/libs/glfw
+	url = https://github.com/Grobiani/glfw

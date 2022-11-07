@@ -13,7 +13,9 @@ bindirs ""
 
 includedirs {
     "%{wks.location}/%{prj.name}/src",
-    lib_includes[1]
+    lib_includes[1],
+    lib_includes[2],
+    lib_includes[3]
 }
 
 --removefiles {}
