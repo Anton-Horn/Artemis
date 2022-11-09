@@ -5,30 +5,36 @@
 
 Application* Application::Create()
 {
-	Log::Create();
 	return new Application();
 }
 
 void Application::Run()
 {
 
-	ART_ASSERT(true);
+	WindowSpecification window_spec;
+	window_spec.width = 800;
+	window_spec.height = 600;
+	window_spec.title = "Artemis";
 
-	m_Restart = true;
-	while (m_Open) {
+	m_Window.Create(window_spec);
 
+	RendererSpecification renderer_spec;
+	renderer_spec.rendering_api = RenderingApi::OpenGL;
 
+	m_Renderer.Create(renderer_spec);
+
+	while (m_Window.Open()) {
+
+		m_Window.Update();
 
 	}
 
 }
 
-bool Application::Terminate(Application* application)
+void Application::Terminate()
 {
-	Log::Delete();
-	bool restart = application->m_Restart;
-	delete application;
-	return restart;
+
+	m_Window.Terminate();
 }
 
 

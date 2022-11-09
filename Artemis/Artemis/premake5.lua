@@ -18,7 +18,13 @@ includedirs {
     lib_includes[3]
 }
 
---removefiles {}
+links {
+    "glfw",
+    "glad",
+    "opengl32.lib"
+}
+
+removefiles {"src/Platform/**.**"}
 
 filter "configurations:Debug"
     defines { "ART_DEBUG"}
@@ -38,4 +44,8 @@ filter "system:windows"
         "ART_WINDOWS"
     }
 
-    --files {}
+    files {
+
+        "src/Platform/Windows/**.**"
+
+    }

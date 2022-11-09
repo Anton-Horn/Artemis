@@ -1,22 +1,30 @@
 #pragma once
 
+#include "Window.h"
+#include "Renderer/Renderer.h"
 
-	class Application {
+class Application {
 
-	public:
+public:
 
-		static Application* Create();
+	Application() = default;
+
+	Application(const Application&) = delete;
+	Application& operator=(const Application&) = delete;
+
+	Application(const Application&&) = delete;
+	Application& operator=(const Application&&) = delete;
+
+	static Application* Create();
 		
-		void Run();
+	void Run();
+	void Terminate();
 
-		static bool Terminate(Application* application);
+private:
 
-	private:
+	Window m_Window;
+	Renderer m_Renderer;
 
-		bool m_Open = true;
-		bool m_Restart = false;
-
-
-	};
+};
 
 

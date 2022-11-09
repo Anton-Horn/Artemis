@@ -1,18 +1,20 @@
 
 #include "Application.h"
 
+#include "Log.h"
+#include "Debug_Test.h"
+
 int main(int argc, char** argv) {
 
-	bool stay_open = false;
+	Log::Create();
 
-	do {
-		Application* app = Application::Create();
-		if (!app) return -1;
+	Application* app = Application::Create();
+	ART_ASSERT(app);
+	app->Run();
+	app->Terminate();
+	delete app;
 
-		app->Run();
-		stay_open = Application::Terminate(app);
-	} 
-	while (stay_open);
+	Log::Delete();
 
 	return 0;
 }
