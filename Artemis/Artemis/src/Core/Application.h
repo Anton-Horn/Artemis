@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Window.h"
-#include "Renderer/Renderer.h"
+#include "Rendering/Renderer.h"
 
 class Application {
 
@@ -20,10 +20,13 @@ public:
 	void Run();
 	void Terminate();
 
+	static Window& GetWindow();
+
 private:
 
 	Window m_Window;
-	Renderer m_Renderer;
+	
+	static Application* s_Instance;
 
 };
 

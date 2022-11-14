@@ -11,5 +11,3 @@
 	#define ART_ASSERT(x) if ( (x) ) {ART_INFO("Assert \"{0}\" passed! [{2}:{1}]", TOSTRING(x), __LINE__, __FILE__); } else {ART_ABORT("Assert \"{0}\" failed! [{2}:{1}]", TOSTRING(x), __LINE__, __FILE__);}
 #endif
 
-
-

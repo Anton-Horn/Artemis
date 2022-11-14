@@ -10,13 +10,15 @@ group "Libs"
 include "Artemis/libs/spdlog"
 include "Artemis/libs/glfw"
 include "Artemis/libs/glad"
+include "Artemis/libs/glm"
 
 group ""
 
 lib_includes = {
     "%{wks.location}/Artemis/libs/spdlog/include",
     "%{wks.location}/Artemis/libs/glfw/include",
-    "%{wks.location}/Artemis/libs/glad/include"
+    "%{wks.location}/Artemis/libs/glad/include",
+    "%{wks.location}/Artemis/libs/glm/include"
 }
 
 include "Artemis"

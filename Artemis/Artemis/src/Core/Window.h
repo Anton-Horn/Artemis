@@ -23,6 +23,10 @@ public:
 
 	bool Open();
 
+	void* GetImplementationPointer() {
+		return m_ImplPointer;
+	}
+
 	Window() = default;
 
 	Window(const Window&) = delete;

@@ -5,3 +5,6 @@
 [submodule "Artemis/Artemis/libs/glfw"]
 	path = Artemis/Artemis/libs/glfw
 	url = https://github.com/Grobiani/glfw
+[submodule "Artemis/Artemis/libs/glm"]
+	path = Artemis/Artemis/libs/glm
+	url = https://github.com/Grobiani/glm

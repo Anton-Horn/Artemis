@@ -3,10 +3,7 @@
 
 #include "Debug_Test.h"
 
-Application* Application::Create()
-{
-	return new Application();
-}
+Application* Application::s_Instance;
 
 void Application::Run()
 {
@@ -17,11 +14,6 @@ void Application::Run()
 	window_spec.title = "Artemis";
 
 	m_Window.Create(window_spec);
-
-	RendererSpecification renderer_spec;
-	renderer_spec.rendering_api = RenderingApi::OpenGL;
-
-	m_Renderer.Create(renderer_spec);
 
 	while (m_Window.Open()) {
 
@@ -35,6 +27,17 @@ void Application::Terminate()
 {
 
 	m_Window.Terminate();
+}
+
+Window& Application::GetWindow()
+{
+	return s_Instance->m_Window;
+}
+
+Application* Application::Create()
+{
+	s_Instance = new Application();
+	return s_Instance;
 }
 
 

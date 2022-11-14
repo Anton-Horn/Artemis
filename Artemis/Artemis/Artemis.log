@@ -47,3 +47,7 @@ Artemis: [19:50:47] Assert "app" passed! [C:\dev\Artemis\Artemis\Artemis\src\Cor
 Artemis: [19:50:47] Assert "glfwInit() == 1" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:11]
 Artemis: [19:50:47] Assert "window" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:15]
 Artemis: [19:50:47] Assert "gladLoadGL()" passed! [C:\dev\Artemis\Artemis\Artemis\src\Renderer\OpenGL\OpenGLRenderer.cpp:10]
+Artemis: [18:58:42] Assert "app" passed! [C:\dev\Artemis\Artemis\Artemis\src\Core\main.cpp:12]
+Artemis: [18:58:42] Assert "glfwInit() == 1" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:11]
+Artemis: [18:58:43] Assert "window" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:15]
+Artemis: [18:58:43] Assert "gladLoadGL()" passed! [C:\dev\Artemis\Artemis\Artemis\src\Renderer\OpenGL\OpenGLRenderer.cpp:10]
