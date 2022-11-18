@@ -1,21 +1,23 @@
 
 #include "OpenGLShader.h"
 
-#include "Core\Log.h"
-#include "glad\glad.h"
+#include "Core/Log.h"
+#include "glad/glad.h"
+
+#include "Core/Debug_Test.h"
 
 unsigned int OpenGLShader::GetUniformLocation(const char* uname) const
 {
-	return glGetUniformLocation(m_ShaderID, uname);
+	return glGetUniformLocation(m_shader_id, uname);
 }
 
-OpenGLShader::OpenGLShader(const char* VertexSource, const char* FragmentSource)
+OpenGLShader::OpenGLShader(const std::string& vertex_source, const std::string& fragment_source)
 {
-	m_ShaderID = glCreateProgram();
+	m_shader_id = glCreateProgram();
 
 	GLuint VertexID = glCreateShader(GL_VERTEX_SHADER);
-
-	glShaderSource(VertexID, 1, &VertexSource, 0);
+	const char* vs = vertex_source.c_str();
+	glShaderSource(VertexID, 1, &vs, 0);
 	glCompileShader(VertexID);
 
 	int result;
@@ -32,7 +34,7 @@ OpenGLShader::OpenGLShader(const char* VertexSource, const char* FragmentSource)
 
 		glGetShaderInfoLog(VertexID, length, &length, message);
 
-		AT_ABORT("[OpenGL VertexShader compilation error] {0}", message);
+		ART_ABORT("[OpenGL VertexShader compilation error] {0}", message);
 
 		delete[] message;
 
@@ -40,7 +42,8 @@ OpenGLShader::OpenGLShader(const char* VertexSource, const char* FragmentSource)
 
 	GLuint FragID = glCreateShader(GL_FRAGMENT_SHADER);
 
-	glShaderSource(FragID, 1, &FragmentSource, 0);
+	const char* fs = fragment_source.c_str();
+	glShaderSource(FragID, 1, &fs, 0);
 	glCompileShader(FragID);
 
 	glGetShaderiv(FragID, GL_COMPILE_STATUS, &result);
@@ -55,19 +58,19 @@ OpenGLShader::OpenGLShader(const char* VertexSource, const char* FragmentSource)
 
 		glGetShaderInfoLog(FragID, length, &length, message);
 
-		AT_ABORT("[OpenGL FragmentShader compilation error] {0}", message);
+		ART_ABORT("[OpenGL FragmentShader compilation error] {0}", message);
 
 		delete[] message;
 
 	}
 
-	glAttachShader(m_ShaderID, VertexID);
-	glAttachShader(m_ShaderID, FragID);
+	glAttachShader(m_shader_id, VertexID);
+	glAttachShader(m_shader_id, FragID);
 
-	glLinkProgram(m_ShaderID);
+	glLinkProgram(m_shader_id);
 
-	glDetachShader(m_ShaderID, VertexID);
-	glDetachShader(m_ShaderID, FragID);
+	glDetachShader(m_shader_id, VertexID);
+	glDetachShader(m_shader_id, FragID);
 
 	glDeleteShader(VertexID);
 	glDeleteShader(FragID);
@@ -76,7 +79,7 @@ OpenGLShader::OpenGLShader(const char* VertexSource, const char* FragmentSource)
 
 OpenGLShader::~OpenGLShader()
 {
-	glDeleteProgram(m_ShaderID);
+	glDeleteProgram(m_shader_id);
 }
 
 void OpenGLShader::SetUniform1f(float f, const char* uname) const
@@ -205,7 +208,7 @@ void OpenGLShader::SetUniformMatrix3x4(int count, const float* data, const char*
 
 void OpenGLShader::Bind() const
 {
-	glUseProgram(m_ShaderID);
+	glUseProgram(m_shader_id);
 }
 
 void OpenGLShader::UnBind() const

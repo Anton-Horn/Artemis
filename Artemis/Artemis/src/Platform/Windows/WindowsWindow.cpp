@@ -16,9 +16,9 @@ void Window::Create(const WindowSpecification& spec) {
 
 	glfwMakeContextCurrent(window);
 
-	m_ImplPointer = window;
+	m_impl_pointer = window;
 
-	m_Spec = spec;
+	m_spec = spec;
 
 }
 
@@ -29,7 +29,7 @@ void Window::Update()
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	
-	glfwSwapBuffers((GLFWwindow*)m_ImplPointer);
+	glfwSwapBuffers((GLFWwindow*)m_impl_pointer);
 
 	
 	glfwPollEvents();
@@ -38,7 +38,7 @@ void Window::Update()
 
 bool Window::Open()
 {
-	return !glfwWindowShouldClose((GLFWwindow*)m_ImplPointer);
+	return !glfwWindowShouldClose((GLFWwindow*)m_impl_pointer);
 }
 
 void Window::Terminate()

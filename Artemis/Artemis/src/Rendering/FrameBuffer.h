@@ -16,32 +16,34 @@ enum class FramebufferTextureFormat {
 };
 
 struct FramebufferTextureSpecification {
-	FramebufferTextureFormat Format;
+	FramebufferTextureFormat format;
 	FramebufferTextureSpecification() = default;
-	FramebufferTextureSpecification(FramebufferTextureFormat format) : Format(format) {};
+	FramebufferTextureSpecification(FramebufferTextureFormat format) : format(format) {};
 };
 
 struct FramebufferTextureAttachmentSpecification {
-	std::vector<FramebufferTextureSpecification> TextureAttachments;
+	std::vector<FramebufferTextureSpecification> texture_attachments;
 	FramebufferTextureAttachmentSpecification() = default;
-	FramebufferTextureAttachmentSpecification(std::initializer_list<FramebufferTextureSpecification> attachments) : TextureAttachments(attachments) {};
+	FramebufferTextureAttachmentSpecification(std::initializer_list<FramebufferTextureSpecification> attachments) : texture_attachments(attachments) {};
 };
 
 struct FrameBufferSpecification {
 
-	uint32_t Width;
-	uint32_t Height;
-	uint32_t MinWidth;
-	uint32_t MaxWidth;
-	uint32_t MinHeight;
-	uint32_t MaxHeight;
+	uint32_t width;
+	uint32_t height;
+	uint32_t min_width;
+	uint32_t max_width;
+	uint32_t min_height;
+	uint32_t max_height;
 
-	FramebufferTextureAttachmentSpecification Attachments;
+	FramebufferTextureAttachmentSpecification attachments;
 
-	uint32_t Samples;
+	uint32_t samples;
 
-	bool SwapChainTarget = false;
+	bool swap_chain_target = false;
 };
+
+enum class RenderingAPI;
 
 class FrameBuffer
 {
@@ -61,7 +63,7 @@ public:
 
 	virtual int ReadPixel(uint32_t attachmentIndex, int x, int y) = 0; 
 
-	static Ref<FrameBuffer> Create(const FrameBufferSpecification& spec);
+	static FrameBuffer* Create(const FrameBufferSpecification& spec, RenderingAPI api);
 
 	virtual void ClearColorAttachment(uint32_t index, int value) = 0;
 

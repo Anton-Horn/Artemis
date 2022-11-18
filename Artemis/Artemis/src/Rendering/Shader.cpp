@@ -2,7 +2,6 @@
 
 #include <fstream>
 
-#include "RenderingPipeline.h"
 #include "Rendering/OpenGL/OpenGLShader.h"
 
 #include "Core/Log.h"
@@ -30,11 +29,11 @@ std::string Shader::LoadShaderSource(const std::filesystem::path& path)
 	return content;
 }
 
-Ref<Shader>Shader::Create(const char* VertexSource, const char* FragmentSource)
+Shader* Shader::Create(const std::string& VertexSource, const std::string& FragmentSource, RenderingAPI api)
 {
 
-	if (RenderingPipeline::GetData().API == RenderingAPI::OpenGL) {
-		return CreateRef<OpenGLShader>(VertexSource, FragmentSource);
+	if (api == RenderingAPI::OpenGL) {
+		return new OpenGLShader(VertexSource, FragmentSource);
 	}
 	return nullptr;
 

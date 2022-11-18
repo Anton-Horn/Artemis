@@ -9,40 +9,40 @@
 
 OpenGLVertexBuffer::OpenGLVertexBuffer(const VertexBufferSpec& spec)
 {
-	m_Specification = spec;
-	m_Specification.Dynamic = true;
+	m_specification = spec;
+	m_specification.dynamic = true;
 
-	glGenVertexArrays(1, &m_VAO_ID);
-	glBindVertexArray(m_VAO_ID);
+	glGenVertexArrays(1, &m_vao_id);
+	glBindVertexArray(m_vao_id);
 
-	glGenBuffers(1, &m_VB_ID);
-	glBindBuffer(GL_ARRAY_BUFFER, m_VB_ID);
-	glBufferData(GL_ARRAY_BUFFER, spec.BufferSize * m_Specification.VertexSize, nullptr, GL_DYNAMIC_DRAW);
+	glGenBuffers(1, &m_vb_id);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vb_id);
+	glBufferData(GL_ARRAY_BUFFER, spec.buffer_size * m_specification.vertex_size, nullptr, GL_DYNAMIC_DRAW);
 
 	int index = 0;
 	size_t offset = 0;
-	for (auto& attrib : m_Specification.Attributes.Attributes) {
+	for (auto& attrib : m_specification.attributes.attributes) {
 		glEnableVertexAttribArray(index);
-		switch (attrib.DataType) {
+		switch (attrib.data_type) {
 		case VertexBufferDataType::FLOAT:
-			glVertexAttribPointer(index, (GLint)attrib.DataCount, GL_FLOAT, GL_FALSE, (GLsizei)m_Specification.VertexSize, (void*) offset);
-			offset += (int) sizeof(float) * attrib.DataCount;
+			glVertexAttribPointer(index, (GLint)attrib.data_count, GL_FLOAT, GL_FALSE, (GLsizei)m_specification.vertex_size, (void*) offset);
+			offset += (int) sizeof(float) * attrib.data_count;
 			break;
 		case VertexBufferDataType::INT:
-			glVertexAttribIPointer(index, (GLint)attrib.DataCount, GL_INT, (GLsizei) m_Specification.VertexSize, (void*)offset);
-			offset += (int) sizeof(int) * attrib.DataCount;
+			glVertexAttribIPointer(index, (GLint)attrib.data_count, GL_INT, (GLsizei) m_specification.vertex_size, (void*)offset);
+			offset += (int) sizeof(int) * attrib.data_count;
 			break;
 		case VertexBufferDataType::BYTE:
-			glVertexAttribIPointer(index, (GLint)attrib.DataCount, GL_BYTE, (GLsizei)m_Specification.VertexSize, (void*)offset);
-			offset += (int) sizeof(char) * attrib.DataCount;
+			glVertexAttribIPointer(index, (GLint)attrib.data_count, GL_BYTE, (GLsizei)m_specification.vertex_size, (void*)offset);
+			offset += (int) sizeof(char) * attrib.data_count;
 			break;
 		case VertexBufferDataType::UNSIGNED_INT:
-			glVertexAttribIPointer(index, (GLint)attrib.DataCount, GL_UNSIGNED_INT, (GLsizei)m_Specification.VertexSize, (void*)offset);
-			offset += (int) sizeof(int) * attrib.DataCount;
+			glVertexAttribIPointer(index, (GLint)attrib.data_count, GL_UNSIGNED_INT, (GLsizei)m_specification.vertex_size, (void*)offset);
+			offset += (int) sizeof(int) * attrib.data_count;
 			break;
 		case VertexBufferDataType::UNSIGNED_BYTE:
-			glVertexAttribIPointer(index, (GLint)attrib.DataCount, GL_UNSIGNED_BYTE, (GLsizei)m_Specification.VertexSize, (void*)offset);
-			offset += (int) sizeof(char) * attrib.DataCount;
+			glVertexAttribIPointer(index, (GLint)attrib.data_count, GL_UNSIGNED_BYTE, (GLsizei)m_specification.vertex_size, (void*)offset);
+			offset += (int) sizeof(char) * attrib.data_count;
 			break;
 		}
 		index++;
@@ -56,40 +56,40 @@ OpenGLVertexBuffer::OpenGLVertexBuffer(const VertexBufferSpec& spec)
 
 OpenGLVertexBuffer::OpenGLVertexBuffer(const VertexBufferSpec& spec, void* data)
 {
-	m_Specification = spec;
-	m_Specification.Dynamic = false;
+	m_specification = spec;
+	m_specification.dynamic = false;
 
-	glGenVertexArrays(1, &m_VAO_ID);
-	glBindVertexArray(m_VAO_ID);
+	glGenVertexArrays(1, &m_vao_id);
+	glBindVertexArray(m_vao_id);
 
-	glGenBuffers(1, &m_VB_ID);
-	glBindBuffer(GL_ARRAY_BUFFER, m_VB_ID);
-	glBufferData(GL_ARRAY_BUFFER, m_Specification.BufferSize * m_Specification.VertexSize, data, GL_STATIC_DRAW);
+	glGenBuffers(1, &m_vb_id);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vb_id);
+	glBufferData(GL_ARRAY_BUFFER, m_specification.buffer_size * m_specification.vertex_size, data, GL_STATIC_DRAW);
 
 	int index = 0;
 	size_t offset = 0;
-	for (auto& attrib : m_Specification.Attributes.Attributes) {
+	for (auto& attrib : m_specification.attributes.attributes) {
 		glEnableVertexAttribArray(index);
-		switch (attrib.DataType) {
+		switch (attrib.data_type) {
 		case VertexBufferDataType::FLOAT:
-			glVertexAttribPointer(index, (GLint) attrib.DataCount, GL_FLOAT, GL_FALSE, (GLint)m_Specification.VertexSize, (void*)offset);
-			offset += sizeof(float) * attrib.DataCount;
+			glVertexAttribPointer(index, (GLint) attrib.data_count, GL_FLOAT, GL_FALSE, (GLint)m_specification.vertex_size, (void*)offset);
+			offset += sizeof(float) * attrib.data_count;
 			break;
 		case VertexBufferDataType::INT:
-			glVertexAttribIPointer(index, (GLint)attrib.DataCount, GL_INT, (GLint)m_Specification.VertexSize, (void*)offset);
-			offset += sizeof(int) * attrib.DataCount;
+			glVertexAttribIPointer(index, (GLint)attrib.data_count, GL_INT, (GLint)m_specification.vertex_size, (void*)offset);
+			offset += sizeof(int) * attrib.data_count;
 			break;
 		case VertexBufferDataType::BYTE:
-			glVertexAttribIPointer(index, (GLint)attrib.DataCount, GL_BYTE, (GLint)m_Specification.VertexSize, (void*)offset);
-			offset += sizeof(char) * attrib.DataCount;
+			glVertexAttribIPointer(index, (GLint)attrib.data_count, GL_BYTE, (GLint)m_specification.vertex_size, (void*)offset);
+			offset += sizeof(char) * attrib.data_count;
 			break;
 		case VertexBufferDataType::UNSIGNED_INT:
-			glVertexAttribIPointer(index, (GLint)attrib.DataCount, GL_UNSIGNED_INT, (GLint)m_Specification.VertexSize, (void*)offset);
-			offset += sizeof(int) * attrib.DataCount;
+			glVertexAttribIPointer(index, (GLint)attrib.data_count, GL_UNSIGNED_INT, (GLint)m_specification.vertex_size, (void*)offset);
+			offset += sizeof(int) * attrib.data_count;
 			break;
 		case VertexBufferDataType::UNSIGNED_BYTE:
-			glVertexAttribIPointer(index, (GLint)attrib.DataCount, GL_UNSIGNED_BYTE, (GLint)m_Specification.VertexSize, (void*)offset);
-			offset += sizeof(char) * attrib.DataCount;
+			glVertexAttribIPointer(index, (GLint)attrib.data_count, GL_UNSIGNED_BYTE, (GLint)m_specification.vertex_size, (void*)offset);
+			offset += sizeof(char) * attrib.data_count;
 			break;
 		}
 		index++;
@@ -97,22 +97,22 @@ OpenGLVertexBuffer::OpenGLVertexBuffer(const VertexBufferSpec& spec, void* data)
 
 	UnBind();
 
-	m_VertexArray = data;
-	m_VertexCounter = (int) m_Specification.BufferSize;
+	m_vertex_array = data;
+	m_vertex_counter = (int) m_specification.buffer_size;
 	glBindVertexArray(0);
 
 }
 
 OpenGLVertexBuffer::~OpenGLVertexBuffer()
 {
-	glDeleteBuffers(1, &m_VB_ID);
+	glDeleteBuffers(1, &m_vb_id);
 }
 
 
 void OpenGLVertexBuffer::Bind() const
 {
-	glBindVertexArray(m_VAO_ID);
-	glBindBuffer(GL_ARRAY_BUFFER, m_VB_ID);
+	glBindVertexArray(m_vao_id);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vb_id);
 }
 
 

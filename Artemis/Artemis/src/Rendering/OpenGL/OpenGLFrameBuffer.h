@@ -14,14 +14,14 @@ public:
 
 private:
 
-	FrameBufferSpecification m_Specification;
-	uint32_t m_FrameBufferID = 0;
+	FrameBufferSpecification m_specification;
+	uint32_t m_frame_buffer_id = 0;
 
-	std::vector<FramebufferTextureSpecification> m_ColorAttachmentSpecifications;
-	FramebufferTextureSpecification m_DepthAttachmentSpecification = FramebufferTextureFormat::None;
+	std::vector<FramebufferTextureSpecification> m_color_attachment_specifications;
+	FramebufferTextureSpecification m_depth_attachment_specification = FramebufferTextureFormat::None;
 
-	std::vector<uint32_t> m_ColorAttachments;
-	uint32_t m_DepthAttachment = 0;
+	std::vector<uint32_t> m_color_attachments;
+	uint32_t m_depth_attachment = 0;
 
 	virtual void Bind() override;
 

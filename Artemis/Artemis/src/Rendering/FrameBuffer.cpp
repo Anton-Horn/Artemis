@@ -1,14 +1,12 @@
 
 #include "FrameBuffer.h"
-
-#include "RenderingPipeline.h"
 #include "Rendering\OpenGL\OpenGLFrameBuffer.h"
 
-Ref<FrameBuffer>FrameBuffer::Create(const FrameBufferSpecification& spec)
+FrameBuffer* FrameBuffer::Create(const FrameBufferSpecification& spec, RenderingAPI api)
 {
 	
-	if (RenderingPipeline::GetData().API == RenderingAPI::OpenGL) {
-		return CreateRef<FrameBuffer>(spec);
+	if (api == RenderingAPI::OpenGL) {
+		return new OpenGLFrameBuffer(spec);
 	}
 	return nullptr;
 }

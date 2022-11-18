@@ -18,20 +18,20 @@ enum class WrapBehavior {
 
 struct Texture2DSpecification {
 
-	WrapBehavior WrapBehavior = WrapBehavior::Repeat;
-	TextureFilter MagFilter = TextureFilter::Nearest;
-	TextureFilter MinFilter = TextureFilter::Nearest;
-	uint32_t Width = 0;
-	uint32_t Height = 0;
-	uint32_t BitsPerPixel = 0;
+	WrapBehavior wrap_behavior = WrapBehavior::Repeat;
+	TextureFilter mag_filter = TextureFilter::Nearest;
+	TextureFilter min_filter = TextureFilter::Nearest;
+	uint32_t width = 0;
+	uint32_t height = 0;
+	uint32_t bits_per_pixel = 0;
 
-	std::string Filename;
-	bool LoadFile = true;
+	std::string file_name;
+	bool load_file = true;
 
-	uint8_t* Data = nullptr;
+	uint8_t* data = nullptr;
 
-	bool StoreImageData = true;
-	bool AllowTexturePointer = false;
+	bool store_image_data = true;
+	bool allow_texture_pointer = false;
 
 };
 
@@ -41,9 +41,9 @@ class Texture2D
 public:
 
 	//return value must be deleted
-	static uint8_t* LoadTexture(const std::string& filename, int& width, int& height, int& bitsperpixel);
+	static uint8_t* LoadTexture(const std::string& file_name, int& width, int& height, int& bits_per_pixel, RenderingAPI api);
 
-	static Ref<Texture2D> Create(const Texture2DSpecification& spec);
+	static Texture2D* Create(const Texture2DSpecification& spec, RenderingAPI api);
 
 	Texture2D();
 	virtual ~Texture2D() = default;
@@ -54,47 +54,47 @@ public:
 	int GetHeight() const;
 
 	TextureFilter GetMagFilter() const {
-		return m_MagFilter;
+		return m_mag_filter;
 	}
 	TextureFilter GetMinFilter() const {
-		return m_MinFilter;
+		return m_min_filter;
 	}
 	WrapBehavior GetWrapBehavior() const {
-		return m_WrapBehavior;
+		return m_wrap_behavior;
 	}
 
 	void SetMagFilter(TextureFilter filter) {
-		m_MagFilter = filter;
+		m_mag_filter = filter;
 	}
 	void SetMinFilter(TextureFilter filter) {
-		m_MinFilter = filter;
+		m_min_filter = filter;
 	}
-	void SetWrapBehavior(WrapBehavior wrapfilter) {
-		m_WrapBehavior = wrapfilter;
+	void SetWrapBehavior(WrapBehavior wrap_filter) {
+		m_wrap_behavior = wrap_filter;
 	}
 
 	virtual uint32_t GetRendererTexture() const = 0;
 
-	virtual void CreateTexturePointer(uint32_t TextureRendererID) = 0;
+	virtual void CreateTexturePointer(uint32_t texture_renderer_id) = 0;
 
 private: 
 
-	bool m_AllowTexturePointer;
+	bool m_allow_texture_pointer;
 
 protected:
 
-	uint8_t* m_TextureData = nullptr;
-	bool m_DeleteOnDeconstruct = true;
+	uint8_t* m_texture_data = nullptr;
+	bool m_delete_on_construct = true;
 
-	std::string m_Filename;
+	std::string m_file_name;
 
-	int m_Width;
-	int m_Height;
+	int m_width;
+	int m_height;
 
-	TextureFilter m_MagFilter = TextureFilter::Nearest;
-	TextureFilter m_MinFilter = TextureFilter::Linear;
+	TextureFilter m_mag_filter = TextureFilter::Nearest;
+	TextureFilter m_min_filter = TextureFilter::Linear;
 
-	WrapBehavior m_WrapBehavior = WrapBehavior::ClampToEdge;
+	WrapBehavior m_wrap_behavior = WrapBehavior::ClampToEdge;
 
 };
 

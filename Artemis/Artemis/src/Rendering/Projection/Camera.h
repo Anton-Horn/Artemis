@@ -6,14 +6,14 @@ struct Camera {
 
 public:
 
-		glm::mat4 Projection;
+		glm::mat4 projection;
 		Camera() = default;
-		Camera(glm::mat4 Projection) : Projection(Projection) {
+		Camera(glm::mat4 projection) : projection(projection) {
 
 		}
 		Camera(const Camera&) = default;
 		const glm::mat4& GetProjection() {
-			return Projection;
+			return projection;
 		}
 
 	};

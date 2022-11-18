@@ -7,7 +7,7 @@
 #include "Core\Application.h"
 
 
-static float m_ScrollWheelValue;
+float m_ScrollWheelValue;
 
 void ScrollWheelCallback(GLFWwindow*, double xoffset, double yoffset) {
 	m_ScrollWheelValue += (float)yoffset;
@@ -104,7 +104,7 @@ float Input::GetMouseWheelValue()
 	return m_ScrollWheelValue;
 }
 
-const char* Input::GetKeyName(KeyCode keycode)
+std::string Input::GetKeyName(KeyCode keycode)
 {
 	return glfwGetKeyName((int)keycode, 0);
 }

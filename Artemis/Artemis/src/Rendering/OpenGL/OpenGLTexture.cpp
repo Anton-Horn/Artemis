@@ -11,106 +11,106 @@
 
 OpenGLTexture::~OpenGLTexture()
 {
-	if (m_DeleteOnDeconstruct) {
-		glDeleteTextures(1, &m_GLTextureID);
+	if (m_delete_on_construct) {
+		glDeleteTextures(1, &m_gl_texture_id);
 	}	
-	delete[] m_TextureData;
+	delete[] m_texture_data;
 }
 
-uint8_t* OpenGLTexture::LoadTexture(const std::string& file_name, int& width, int& height, int& bitperpixel)
+uint8_t* OpenGLTexture::LoadTexture(const std::string& file_name, int& width, int& height, int& bits_per_pixel)
 {
 	stbi_set_flip_vertically_on_load(true);
-	auto TextureBuffer = stbi_load(file_name.c_str() , &width, &height, &bitperpixel, 4);
+	auto texture_buffer = stbi_load(file_name.c_str() , &width, &height, &bits_per_pixel, 4);
 
-	if (!TextureBuffer) {
+	if (!texture_buffer) {
 		ART_ABORT("Failed to load OpenGL Texture: {0}", file_name.c_str());
 	}
-	return TextureBuffer;
+	return texture_buffer;
 }
 
 OpenGLTexture::OpenGLTexture(const Texture2DSpecification& spec)
 {
 
-	if (spec.LoadFile) {
+	if (spec.load_file) {
 
-		m_Filename = spec.Filename;
-		m_TextureData = stbi_load(m_Filename.c_str(), &m_Width, &m_Height, &m_BitsPerPixel, 4);
+		m_file_name = spec.file_name;
+		m_texture_data = stbi_load(m_file_name.c_str(), &m_width, &m_height, &m_bits_per_pixel, 4);
 
-		if (!m_TextureData) {
-			ART_ABORT("Failed to load OpenGL Texture: {0}", m_Filename.c_str());
+		if (!m_texture_data) {
+			ART_ABORT("Failed to load OpenGL Texture: {0}", m_file_name.c_str());
 		}
 
 		glActiveTexture(GL_TEXTURE1);
 
-		glGenTextures(1, &m_GLTextureID);
-		glBindTexture(GL_TEXTURE_2D, m_GLTextureID);
+		glGenTextures(1, &m_gl_texture_id);
+		glBindTexture(GL_TEXTURE_2D, m_gl_texture_id);
 
 		SetTextureFilters(spec);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_TextureData);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_texture_data);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
-		if (!spec.StoreImageData)
-			delete[] m_TextureData;
+		if (!spec.store_image_data)
+			delete[] m_texture_data;
 		
 		return;
 	}
 
-	if (spec.Width == 0 || spec.Height == 0) {
+	if (spec.width == 0 || spec.height == 0) {
 		return;
 	}
 
-	if (spec.Data == nullptr) {
+	if (spec.data == nullptr) {
 
 
-		m_Width = spec.Width;
-		m_Height = spec.Height;
-		m_BitsPerPixel = 32;
+		m_width = spec.width;
+		m_height = spec.height;
+		m_bits_per_pixel = 32;
 		
 		glActiveTexture(GL_TEXTURE1);
 
-		glGenTextures(1, &m_GLTextureID);
-		glBindTexture(GL_TEXTURE_2D, m_GLTextureID);
+		glGenTextures(1, &m_gl_texture_id);
+		glBindTexture(GL_TEXTURE_2D, m_gl_texture_id);
 
 		SetTextureFilters(spec);
 
-		uint32_t data_size = m_Width * m_Height * 4;
+		uint32_t data_size = m_width * m_height * 4;
 
-		m_TextureData = new uint8_t[data_size];
+		m_texture_data = new uint8_t[data_size];
 
-		for (uint32_t i = 0; i < (uint32_t)(m_Width * m_Height); i++) {
-			uint32_t* ptr = (uint32_t*) m_TextureData;
+		for (uint32_t i = 0; i < (uint32_t)(m_width * m_height); i++) {
+			uint32_t* ptr = (uint32_t*) m_texture_data;
 			ptr[i] = 0xffffffff;
 		}
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_TextureData);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_texture_data);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
-		if (!spec.StoreImageData)
-			delete[] m_TextureData;
+		if (!spec.store_image_data)
+			delete[] m_texture_data;
 		return;
 	}
 
-	m_Width = spec.Width;
-	m_Height = spec.Height;
-	m_BitsPerPixel = spec.BitsPerPixel;
+	m_width = spec.width;
+	m_height = spec.height;
+	m_bits_per_pixel = spec.bits_per_pixel;
 
 	glActiveTexture(GL_TEXTURE1);
 
-	glGenTextures(1, &m_GLTextureID);
-	glBindTexture(GL_TEXTURE_2D, m_GLTextureID);
+	glGenTextures(1, &m_gl_texture_id);
+	glBindTexture(GL_TEXTURE_2D, m_gl_texture_id);
 
 	SetTextureFilters(spec);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, spec.Data);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, spec.data);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	
-	if (spec.StoreImageData) {
+	if (spec.store_image_data) {
 
-		uint32_t data_size = spec.Width * spec.Height * (spec.BitsPerPixel / 8);
+		uint32_t data_size = spec.width * spec.height * (spec.bits_per_pixel / 8);
 
-		m_TextureData = new uint8_t[data_size];
-		memcpy(m_TextureData, spec.Data, data_size);
+		m_texture_data = new uint8_t[data_size];
+		memcpy(m_texture_data, spec.data, data_size);
 
 	}
 
@@ -118,50 +118,46 @@ OpenGLTexture::OpenGLTexture(const Texture2DSpecification& spec)
 
 void OpenGLTexture::BindTextureUnit(int unit) const
 {
-	glBindTextureUnit(unit, m_GLTextureID);
+	glBindTextureUnit(unit, m_gl_texture_id);
 }
 
 uint32_t OpenGLTexture::GetRendererTexture() const
 {
-	return m_GLTextureID;
+	return m_gl_texture_id;
 }
 
 void OpenGLTexture::CreateTexturePointer(uint32_t TextureRendererID)
 {
-}
-
-void OpenGLTexture::CreateTexturePointer(uint32_t TextureRendererID)
-{
-	m_GLTextureID = TextureRendererID;
-	m_DeleteOnDeconstruct = false;
+	m_gl_texture_id = TextureRendererID;
+	m_delete_on_construct = false;
 }
 
 void OpenGLTexture::SetTextureFilters(const Texture2DSpecification& spec)
 {
-	if (spec.MagFilter == TextureFilter::Linear) {
+	if (spec.mag_filter == TextureFilter::Linear) {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	}
-	else if (spec.MagFilter == TextureFilter::Nearest) {
+	else if (spec.mag_filter == TextureFilter::Nearest) {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	}
 
-	if (spec.MinFilter == TextureFilter::Linear) {
+	if (spec.min_filter == TextureFilter::Linear) {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	}
-	else if (spec.MinFilter == TextureFilter::Nearest) {
+	else if (spec.min_filter == TextureFilter::Nearest) {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	}
 
-	if (spec.WrapBehavior == WrapBehavior::ClampToEdge) {
+	if (spec.wrap_behavior == WrapBehavior::ClampToEdge) {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	}
-	else if (spec.WrapBehavior == WrapBehavior::Repeat)
+	else if (spec.wrap_behavior == WrapBehavior::Repeat)
 	{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	}
-	else if (spec.WrapBehavior == WrapBehavior::MirrorRepeat)
+	else if (spec.wrap_behavior == WrapBehavior::MirrorRepeat)
 	{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);

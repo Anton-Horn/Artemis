@@ -75,14 +75,14 @@ static bool IsDepthFormat(FramebufferTextureFormat format) {
 
 OpenGLFrameBuffer::OpenGLFrameBuffer(FrameBufferSpecification spec)
 {
-	m_Specification = spec;
+	m_specification = spec;
 
-	for (auto spec : m_Specification.Attachments.TextureAttachments)
+	for (auto spec : m_specification.attachments.texture_attachments)
 	{
-		if (!IsDepthFormat(spec.Format))
-			m_ColorAttachmentSpecifications.emplace_back(spec);
+		if (!IsDepthFormat(spec.format))
+			m_color_attachment_specifications.emplace_back(spec);
 		else
-			m_DepthAttachmentSpecification = spec;
+			m_depth_attachment_specification = spec;
 	}
 
 	Invalidate();
@@ -90,69 +90,69 @@ OpenGLFrameBuffer::OpenGLFrameBuffer(FrameBufferSpecification spec)
 
 OpenGLFrameBuffer::~OpenGLFrameBuffer()
 {
-	glDeleteFramebuffers(1, &m_FrameBufferID);
-	glDeleteTextures((GLsizei)m_ColorAttachments.size(), m_ColorAttachments.data());
-	glDeleteTextures(1, &m_DepthAttachment);
+	glDeleteFramebuffers(1, &m_frame_buffer_id);
+	glDeleteTextures((GLsizei)m_color_attachments.size(), m_color_attachments.data());
+	glDeleteTextures(1, &m_depth_attachment);
 }
 
 void OpenGLFrameBuffer::Invalidate()
 {
 
-	if (m_FrameBufferID) {
-		glDeleteFramebuffers(1, &m_FrameBufferID);
-		glDeleteTextures((GLsizei)m_ColorAttachments.size(), m_ColorAttachments.data());
-		glDeleteTextures(1, &m_DepthAttachment);
+	if (m_frame_buffer_id) {
+		glDeleteFramebuffers(1, &m_frame_buffer_id);
+		glDeleteTextures((GLsizei)m_color_attachments.size(), m_color_attachments.data());
+		glDeleteTextures(1, &m_depth_attachment);
 
-		m_ColorAttachments.clear();
-		m_DepthAttachment = 0;
+		m_color_attachments.clear();
+		m_depth_attachment = 0;
 	}
 
 
-	glCreateFramebuffers(1, &m_FrameBufferID);
-	glBindFramebuffer(GL_FRAMEBUFFER, m_FrameBufferID);
+	glCreateFramebuffers(1, &m_frame_buffer_id);
+	glBindFramebuffer(GL_FRAMEBUFFER, m_frame_buffer_id);
 
-	bool multisample = m_Specification.Samples > 1;
+	bool multisample = m_specification.samples > 1;
 
 	// Attachments
-	if (m_ColorAttachmentSpecifications.size())
+	if (m_color_attachment_specifications.size())
 	{
-		m_ColorAttachments.resize(m_ColorAttachmentSpecifications.size());
-		CreateTextures(multisample, m_ColorAttachments.data(), m_ColorAttachments.size());
+		m_color_attachments.resize(m_color_attachment_specifications.size());
+		CreateTextures(multisample, m_color_attachments.data(), (uint32_t) m_color_attachments.size());
 
-		for (size_t i = 0; i < m_ColorAttachments.size(); i++)
+		for (int i = 0; i < m_color_attachments.size(); i++)
 		{
-			BindTexture(multisample, m_ColorAttachments[i]);
-			switch (m_ColorAttachmentSpecifications[i].Format)
+			BindTexture(multisample, m_color_attachments[i]);
+			switch (m_color_attachment_specifications[i].format)
 			{
 			case FramebufferTextureFormat::RGBA8:
-				AttachColorTexture(m_ColorAttachments[i], m_Specification.Samples, GL_RGBA8, GL_RGBA, m_Specification.Width, m_Specification.Height, i);
+				AttachColorTexture(m_color_attachments[i], m_specification.samples, GL_RGBA8, GL_RGBA, m_specification.width, m_specification.height, i);
 				break;
 			case FramebufferTextureFormat::RED_INTEGER:
-				AttachColorTexture(m_ColorAttachments[i], m_Specification.Samples, GL_R32I, GL_RED_INTEGER, m_Specification.Width, m_Specification.Height, i);
+				AttachColorTexture(m_color_attachments[i], m_specification.samples, GL_R32I, GL_RED_INTEGER, m_specification.width, m_specification.height, i);
 				break;
 			}
 		}
 	}
 
-	if (m_DepthAttachmentSpecification.Format != FramebufferTextureFormat::None)
+	if (m_depth_attachment_specification.format != FramebufferTextureFormat::None)
 	{
-		CreateTextures(multisample, &m_DepthAttachment, 1);
-		BindTexture(multisample, m_DepthAttachment);
-		switch (m_DepthAttachmentSpecification.Format)
+		CreateTextures(multisample, &m_depth_attachment, 1);
+		BindTexture(multisample, m_depth_attachment);
+		switch (m_depth_attachment_specification.format)
 		{
 		case FramebufferTextureFormat::DEPTH24STENCIL8:
-			AttachDepthTexture(m_DepthAttachment, m_Specification.Samples, GL_DEPTH24_STENCIL8, GL_DEPTH_STENCIL_ATTACHMENT, m_Specification.Width, m_Specification.Height);
+			AttachDepthTexture(m_depth_attachment, m_specification.samples, GL_DEPTH24_STENCIL8, GL_DEPTH_STENCIL_ATTACHMENT, m_specification.width, m_specification.height);
 			break;
 		}
 	}
 
-	if (m_ColorAttachments.size() > 1)
+	if (m_color_attachments.size() > 1)
 	{
-		ART_ASSERT(m_ColorAttachments.size() <= 4);
+		ART_ASSERT(m_color_attachments.size() <= 4);
 			GLenum buffers[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
-		glDrawBuffers(m_ColorAttachments.size(), buffers);
+		glDrawBuffers( (uint32_t) m_color_attachments.size(), buffers);
 	}
-	else if (m_ColorAttachments.empty())
+	else if (m_color_attachments.empty())
 	{
 		// Only depth-pass
 		glDrawBuffer(GL_NONE);
@@ -167,8 +167,8 @@ void OpenGLFrameBuffer::Invalidate()
 
 void OpenGLFrameBuffer::Bind()
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, m_FrameBufferID);
-	glViewport(0, 0, m_Specification.Width, m_Specification.Height);
+	glBindFramebuffer(GL_FRAMEBUFFER, m_frame_buffer_id);
+	glViewport(0, 0, m_specification.width, m_specification.height);
 }
 
 void OpenGLFrameBuffer::UnBind()
@@ -178,27 +178,27 @@ void OpenGLFrameBuffer::UnBind()
 
 const FrameBufferSpecification& OpenGLFrameBuffer::GetSpec() const
 {
-	return m_Specification;
+	return m_specification;
 }
 
 FrameBufferSpecification& OpenGLFrameBuffer::GetSpec()
 {
-	return m_Specification;
+	return m_specification;
 }
 
 uint32_t OpenGLFrameBuffer::GetColorAttachmentRendererID(int id)
 {
-	ART_ASSERT(id < m_ColorAttachments.size());
-	return m_ColorAttachments[id];
+	ART_ASSERT(id < m_color_attachments.size());
+	return m_color_attachments[id];
 }
 
 void OpenGLFrameBuffer::Resize(uint32_t width, uint32_t height)
 {
-	if (width < m_Specification.MinWidth || width > m_Specification.MaxWidth) { ART_WARN("[FrameBuffer] Tried to resize the Framebuffer over the min/max Width"); return; }
-	if (height < m_Specification.MinHeight || height > m_Specification.MaxHeight) { ART_WARN("[FrameBuffer] Tried to resize the Framebuffer over the min/max Height"); return; }
+	if (width < m_specification.min_width || width > m_specification.max_width) { ART_WARN("[FrameBuffer] Tried to resize the Framebuffer over the min/max Width"); return; }
+	if (height < m_specification.min_height || height > m_specification.max_height) { ART_WARN("[FrameBuffer] Tried to resize the Framebuffer over the min/max Height"); return; }
 
-	m_Specification.Width = width;
-	m_Specification.Height = height;
+	m_specification.width = width;
+	m_specification.height = height;
 
 	glViewport(0, 0, width, height);
 	Invalidate();
@@ -206,7 +206,7 @@ void OpenGLFrameBuffer::Resize(uint32_t width, uint32_t height)
 
 int OpenGLFrameBuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
 {
-	ART_ASSERT(attachmentIndex < m_ColorAttachments.size());
+	ART_ASSERT(attachmentIndex < m_color_attachments.size());
 	glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
 	int pixelData;
 	glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
@@ -215,12 +215,12 @@ int OpenGLFrameBuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
 
 void OpenGLFrameBuffer::ClearColorAttachment(uint32_t index, int value)
 {
-	ART_ASSERT(index < m_ColorAttachments.size());
+	ART_ASSERT(index < m_color_attachments.size());
 
-	auto& spec = m_ColorAttachmentSpecifications[index];
+	auto& spec = m_color_attachment_specifications[index];
 
-	if (spec.Format == FramebufferTextureFormat::RED_INTEGER) {
-		glClearTexImage(m_ColorAttachments[index], 0, GL_RED_INTEGER, GL_INT, &value);
+	if (spec.format == FramebufferTextureFormat::RED_INTEGER) {
+		glClearTexImage(m_color_attachments[index], 0, GL_RED_INTEGER, GL_INT, &value);
 	}
 	else {
 		ART_ABORT("Tried to clear a non integer colorattachment with an int!");

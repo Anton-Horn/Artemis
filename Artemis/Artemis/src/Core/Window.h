@@ -24,7 +24,11 @@ public:
 	bool Open();
 
 	void* GetImplementationPointer() {
-		return m_ImplPointer;
+		return m_impl_pointer;
+	}
+
+	const WindowSpecification& GetSpec() {
+		return m_spec;
 	}
 
 	Window() = default;
@@ -37,9 +41,9 @@ public:
 
 private:
 
-	WindowSpecification m_Spec;
+	WindowSpecification m_spec;
 
-	void* m_ImplPointer = nullptr;
+	void* m_impl_pointer = nullptr;
 
 };
 

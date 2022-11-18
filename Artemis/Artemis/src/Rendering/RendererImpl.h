@@ -7,12 +7,12 @@
 class VertexBuffer;
 class FrameBuffer;
 
-class Renderer
+class RendererImpl
 {
 
 public:
 
-	Renderer() = default;
+	RendererImpl() = default;
 
 	virtual void SetMaxQuads(size_t count) = 0;
 
@@ -21,7 +21,7 @@ public:
 	//is called at the end of the init. process
 	virtual void EndInit() = 0;
 
-	virtual ~Renderer() = default;
+	virtual ~RendererImpl() = default;
 
 	virtual void SetClearColor(const Color& color) = 0;
 	virtual void Clear() = 0;
@@ -32,11 +32,13 @@ public:
 	virtual void EnableZBuffer() = 0;
 	virtual void DisableZBuffer() = 0;
 
-	virtual void SetViewport(int x, int y, int width, int height) = 0;
+	virtual void SetViewport(int x, int y, uint32_t width, uint32_t height) = 0;
 
 	virtual void DrawVertexBuffer(VertexBuffer* vb) = 0;
 
 	virtual int GetTextureSlots() = 0;
+
+	static RendererImpl* Create(RenderingAPI api);
 
 };
 

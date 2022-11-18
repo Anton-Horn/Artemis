@@ -1,13 +1,11 @@
 
 #include "Texture2D.h"
-
 #include "Rendering/OpenGL/OpenGLTexture.h"
-#include "Rendering/RenderingPipeline.h"
 
 
-uint8_t* Texture2D::LoadTexture(const std::string& file_name, int& width, int& height, int& bitsperpixel)
+uint8_t* Texture2D::LoadTexture(const std::string& file_name, int& width, int& height, int& bitsperpixel, RenderingAPI api)
 {	
-	if (RenderingPipeline::GetData().API == RenderingAPI::OpenGL) {
+	if (api == RenderingAPI::OpenGL) {
 		return OpenGLTexture::LoadTexture(file_name, width, height, bitsperpixel);
 	}
 
@@ -15,30 +13,30 @@ uint8_t* Texture2D::LoadTexture(const std::string& file_name, int& width, int& h
 }
 
 
-Ref<Texture2D> Texture2D::Create(const Texture2DSpecification& spec)
+Texture2D* Texture2D::Create(const Texture2DSpecification& spec, RenderingAPI api)
 {
 
-	if (RenderingPipeline::GetData().API == RenderingAPI::OpenGL) {
-		return CreateRef<OpenGLTexture>(spec);
+	if (api == RenderingAPI::OpenGL) {
+		return new OpenGLTexture(spec);
 	}
 
 	return nullptr;
 }
 
 Texture2D::Texture2D() {
-	m_Filename = "";
-	m_Width = 0;
-	m_Height = 0;
+	m_file_name = "";
+	m_width = 0;
+	m_height = 0;
 }
 
 int Texture2D::GetWidth() const
 {
-	return m_Width;
+	return m_width;
 }
 
 int Texture2D::GetHeight() const
 {
-	return m_Height;
+	return m_height;
 }
 void Texture2D::CreateTexturePointer(uint32_t TextureRendererID)
 {

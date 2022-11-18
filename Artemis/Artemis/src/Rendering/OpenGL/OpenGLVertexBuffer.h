@@ -9,8 +9,8 @@ class OpenGLVertexBuffer : public VertexBuffer
 
 private:
 
-	uint32_t m_VB_ID;
-	uint32_t m_VAO_ID;
+	uint32_t m_vb_id;
+	uint32_t m_vao_id;
 
 public:
 	

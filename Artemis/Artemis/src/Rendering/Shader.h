@@ -55,7 +55,7 @@ public:
 	virtual void SetUniformMatrix3x4(int count, const float* data, const char* uname) const = 0;
 
 	static std::string LoadShaderSource(const std::filesystem::path& path);
-	static Ref<Shader> Create(const char* VertexSource, const char* FragmentSource);
+	static Shader* Create(const std::string& VertexSource, const std::string& FragmentSource, RenderingAPI api);
 
 };
 

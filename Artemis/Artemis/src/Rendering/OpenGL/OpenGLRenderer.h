@@ -1,15 +1,15 @@
 #pragma once
 
-#include "Rendering/Renderer.h"
+#include "Rendering/RendererImpl.h"
 
-class OpenGLRenderer : public Renderer
+class OpenGLRenderer : public RendererImpl
 {
 
 private:
 
-	size_t m_MaxQuads = 0;
+	size_t m_max_quads = 0;
 
-	unsigned int* m_QuadIndices = nullptr;
+	uint32_t* m_quad_indices = nullptr;
 
 public:
 
@@ -26,7 +26,7 @@ public:
 	virtual void SetClearColor(const Color& color) override;
 	virtual void Clear() override;
 
-	virtual void SetViewport(int x, int y, int width, int height) override;
+	virtual void SetViewport(int x, int y, uint32_t width, uint32_t height) override;
 
 	virtual void EnableAlphaBlending() override;
 

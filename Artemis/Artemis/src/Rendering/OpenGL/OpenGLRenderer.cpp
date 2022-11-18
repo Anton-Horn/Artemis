@@ -31,7 +31,7 @@ void APIENTRY DebugCallback(GLenum source, GLenum type, GLuint id, GLenum severi
 
 OpenGLRenderer::~OpenGLRenderer()
 {
-	delete[] m_QuadIndices;
+	delete[] m_quad_indices;
 }
 
 void OpenGLRenderer::BeginInit()
@@ -46,13 +46,13 @@ void OpenGLRenderer::BeginInit()
 		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 		glDebugMessageCallback(DebugCallback, 0);
 
-		const GLubyte* Renderer = glGetString(GL_RENDERER);
+		const GLubyte* RendererImpl = glGetString(GL_RENDERER);
 		const GLubyte* Vendor = glGetString(GL_VENDOR);
 
 		const GLubyte* Version = glGetString(GL_VERSION);
 		const GLubyte* ShadingLanguageVersion = glGetString(GL_SHADING_LANGUAGE_VERSION);
 
-		ART_LOG("[OpenGL Renderer] {0}", Renderer);
+		ART_LOG("[OpenGL Renderer] {0}", RendererImpl);
 		ART_LOG("[OpenGL Vendor] {0}", Vendor);
 		ART_LOG("[OpenGL Version] {0}", Version);
 		ART_LOG("[OpenGL Shading Language Version] {0}", ShadingLanguageVersion);
@@ -63,19 +63,19 @@ void OpenGLRenderer::BeginInit()
 
 
 	//Quad index Buffer
-	m_QuadIndices = nullptr;
-	m_QuadIndices = new unsigned int[m_MaxQuads * 6];
+	m_quad_indices = nullptr;
+	m_quad_indices = new unsigned int[m_max_quads * 6];
 
 	unsigned int offset = 0;
 
-	for (int i = 0; i < (m_MaxQuads * 6); i += 6) {
+	for (int i = 0; i < (m_max_quads * 6); i += 6) {
 
-		m_QuadIndices[i] = 0 + offset;
-		m_QuadIndices[i + 1] = 1 + offset;
-		m_QuadIndices[i + 2] = 2 + offset;
-		m_QuadIndices[i + 3] = 2 + offset;
-		m_QuadIndices[i + 4] = 3 + offset;
-		m_QuadIndices[i + 5] = 0 + offset;
+		m_quad_indices[i] = 0 + offset;
+		m_quad_indices[i + 1] = 1 + offset;
+		m_quad_indices[i + 2] = 2 + offset;
+		m_quad_indices[i + 3] = 2 + offset;
+		m_quad_indices[i + 4] = 3 + offset;
+		m_quad_indices[i + 5] = 0 + offset;
 
 		offset += 4;
 	}
@@ -98,7 +98,7 @@ void OpenGLRenderer::Clear()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void OpenGLRenderer::SetViewport(int x, int y, int width, int height)
+void OpenGLRenderer::SetViewport(int x, int y, uint32_t width, uint32_t height)
 {
 	glViewport(x, y, width, height);
 }
@@ -128,16 +128,16 @@ void OpenGLRenderer::DisableZBuffer()
 void OpenGLRenderer::DrawVertexBuffer(VertexBuffer* vb)
 {
 
-	if (vb->GetSpec().Dynamic) {
+	if (vb->GetSpec().dynamic) {
 		vb->Bind();
-		glBufferSubData(GL_ARRAY_BUFFER, 0, vb->PlaceOccupied() * vb->GetSpec().VertexSize, vb->GetVertices());
-		glDrawElements(GL_TRIANGLES, (int)((vb->PlaceOccupied() / 4)) * 6, GL_UNSIGNED_INT, m_QuadIndices);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, vb->PlaceOccupied() * vb->GetSpec().vertex_size, vb->GetVertices());
+		glDrawElements(GL_TRIANGLES, (int)((vb->PlaceOccupied() / 4)) * 6, GL_UNSIGNED_INT, m_quad_indices);
 
 		vb->UnBind();
 	}
 	else {
 		vb->Bind();
-		glDrawElements(GL_TRIANGLES, (int)((vb->PlaceOccupied() / 4)) * 6, GL_UNSIGNED_INT, m_QuadIndices);
+		glDrawElements(GL_TRIANGLES, (int)((vb->PlaceOccupied() / 4)) * 6, GL_UNSIGNED_INT, m_quad_indices);
 		vb->UnBind();
 	}
 }
@@ -151,7 +151,7 @@ int OpenGLRenderer::GetTextureSlots()
 
 void OpenGLRenderer::SetMaxQuads(size_t count)
 {
-	m_MaxQuads = count;
+	m_max_quads = count;
 }
 
 

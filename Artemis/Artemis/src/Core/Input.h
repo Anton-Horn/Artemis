@@ -152,21 +152,21 @@ class Input
 
 public:
 
-	static void Init();
+	void Init();
 
-	static bool KeyPressed(KeyCode keycode);
-	static bool KeyReleased(KeyCode keycode);
+	bool KeyPressed(KeyCode keycode);
+	bool KeyReleased(KeyCode keycode);
 
-	static bool KeyClicked(KeyCode keycode);
-	static bool MouseButtonClicked(MouseCode mousecode);
+	bool KeyClicked(KeyCode keycode);
+	bool MouseButtonClicked(MouseCode mousecode);
 
-	static int GetMouseX();
-	static int GetMouseY();
+	int GetMouseX();
+	int GetMouseY();
 
-	static bool MouseButtonPressed(MouseCode mousecode);
-	static bool MouseButtonReleased(MouseCode mousecode);
+	bool MouseButtonPressed(MouseCode mousecode);
+	bool MouseButtonReleased(MouseCode mousecode);
 
-	static float GetMouseWheelValue();
-	static const char* GetKeyName(KeyCode keycode);
+	float GetMouseWheelValue();
+	std::string GetKeyName(KeyCode keycode);
 
 };

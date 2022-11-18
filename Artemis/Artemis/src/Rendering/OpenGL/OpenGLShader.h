@@ -1,20 +1,20 @@
 #pragma once
 
 #include "Rendering/Shader.h"
-
+#include <string>
 
 class OpenGLShader : public Shader
 {
 
 private:
 
-	unsigned int m_ShaderID;
+	unsigned int m_shader_id;
 
 	unsigned int GetUniformLocation(const char* uname) const;
 
 public:
 
-	OpenGLShader(const char* VertexSource, const char* FragmentSource);
+	OpenGLShader(const std::string& vertex_source, const std::string& fragment_source);
 	~OpenGLShader();
 
 	virtual void Bind() const override;

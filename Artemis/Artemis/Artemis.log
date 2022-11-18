@@ -51,3 +51,52 @@ Artemis: [18:58:42] Assert "app" passed! [C:\dev\Artemis\Artemis\Artemis\src\Cor
 Artemis: [18:58:42] Assert "glfwInit() == 1" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:11]
 Artemis: [18:58:43] Assert "window" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:15]
 Artemis: [18:58:43] Assert "gladLoadGL()" passed! [C:\dev\Artemis\Artemis\Artemis\src\Renderer\OpenGL\OpenGLRenderer.cpp:10]
+Artemis: [23:21:32] Assert "app" passed! [C:\dev\Artemis\Artemis\Artemis\src\Core\main.cpp:12]
+Artemis: [23:21:32] Assert "glfwInit() == 1" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:11]
+Artemis: [23:21:32] Assert "window" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:15]
+Artemis: [23:21:32] Assert "gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)" passed! [C:\dev\Artemis\Artemis\Artemis\src\Rendering\OpenGL\OpenGLRenderer.cpp:42]
+Artemis: [23:21:32] [OpenGL Renderer] NVIDIA GeForce RTX 2060/PCIe/SSE2
+Artemis: [23:21:32] [OpenGL Vendor] NVIDIA Corporation
+Artemis: [23:21:32] [OpenGL Version] 4.6.0 NVIDIA 516.94
+Artemis: [23:21:32] [OpenGL Shading Language Version] 4.60 NVIDIA
+Artemis: [23:25:59] Assert "app" passed! [C:\dev\Artemis\Artemis\Artemis\src\Core\main.cpp:12]
+Artemis: [23:25:59] Assert "glfwInit() == 1" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:11]
+Artemis: [23:26:00] Assert "window" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:15]
+Artemis: [23:26:00] Assert "gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)" passed! [C:\dev\Artemis\Artemis\Artemis\src\Rendering\OpenGL\OpenGLRenderer.cpp:42]
+Artemis: [23:26:00] [OpenGL Renderer] NVIDIA GeForce RTX 2060/PCIe/SSE2
+Artemis: [23:26:00] [OpenGL Vendor] NVIDIA Corporation
+Artemis: [23:26:00] [OpenGL Version] 4.6.0 NVIDIA 516.94
+Artemis: [23:26:00] [OpenGL Shading Language Version] 4.60 NVIDIA
+Artemis: [23:27:54] Assert "app" passed! [C:\dev\Artemis\Artemis\Artemis\src\Core\main.cpp:12]
+Artemis: [23:27:54] Assert "glfwInit() == 1" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:11]
+Artemis: [23:27:54] Assert "window" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:15]
+Artemis: [23:27:54] Assert "gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)" passed! [C:\dev\Artemis\Artemis\Artemis\src\Rendering\OpenGL\OpenGLRenderer.cpp:42]
+Artemis: [23:27:54] [OpenGL Renderer] NVIDIA GeForce RTX 2060/PCIe/SSE2
+Artemis: [23:27:54] [OpenGL Vendor] NVIDIA Corporation
+Artemis: [23:27:54] [OpenGL Version] 4.6.0 NVIDIA 516.94
+Artemis: [23:27:54] [OpenGL Shading Language Version] 4.60 NVIDIA
+Artemis: [23:01:06] Assert "app" passed! [C:\dev\Artemis\Artemis\Artemis\src\Core\main.cpp:12]
+Artemis: [23:01:06] Assert "glfwInit() == 1" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:11]
+Artemis: [23:01:06] Assert "window" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:15]
+Artemis: [23:01:06] Assert "gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)" passed! [C:\dev\Artemis\Artemis\Artemis\src\Rendering\OpenGL\OpenGLRenderer.cpp:42]
+Artemis: [23:01:06] [OpenGL Renderer] NVIDIA GeForce RTX 2060/PCIe/SSE2
+Artemis: [23:01:06] [OpenGL Vendor] NVIDIA Corporation
+Artemis: [23:01:06] [OpenGL Version] 4.6.0 NVIDIA 516.94
+Artemis: [23:01:06] [OpenGL Shading Language Version] 4.60 NVIDIA
+Artemis: Assert "app" passed! [C:\dev\Artemis\Artemis\Artemis\src\Core\main.cpp:12]
+Artemis: Assert "glfwInit() == 1" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:11]
+Artemis: Assert "window" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:15]
+Artemis: Assert "gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)" passed! [C:\dev\Artemis\Artemis\Artemis\src\Rendering\OpenGL\OpenGLRenderer.cpp:42]
+Artemis: [OpenGL Renderer] NVIDIA GeForce RTX 2060/PCIe/SSE2
+Artemis: [OpenGL Vendor] NVIDIA Corporation
+Artemis: [OpenGL Version] 4.6.0 NVIDIA 516.94
+Artemis: [OpenGL Shading Language Version] 4.60 NVIDIA
+Artemis: Assert "app" passed! [C:\dev\Artemis\Artemis\Artemis\src\Core\main.cpp:12]
+Artemis: Assert "glfwInit() == 1" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:11]
+Artemis: Assert "window" passed! [C:\dev\Artemis\Artemis\Artemis\src\Platform\Windows\WindowsWindow.cpp:15]
+Artemis: Assert "gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)" passed! [C:\dev\Artemis\Artemis\Artemis\src\Rendering\OpenGL\OpenGLRenderer.cpp:42]
+Artemis: [OpenGL Renderer] NVIDIA GeForce RTX 2060/PCIe/SSE2
+Artemis: [OpenGL Vendor] NVIDIA Corporation
+Artemis: [OpenGL Version] 4.6.0 NVIDIA 516.94
+Artemis: [OpenGL Shading Language Version] 4.60 NVIDIA
+Artemis: Assert "id < m_color_attachments.size()" passed! [C:\dev\Artemis\Artemis\Artemis\src\Rendering\OpenGL\OpenGLFrameBuffer.cpp:191]
