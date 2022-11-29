@@ -24,15 +24,12 @@ void Window::Create(const WindowSpecification& spec) {
 
 void Window::Update()
 {
-
-	
-	glClear(GL_COLOR_BUFFER_BIT);
-
 	
 	glfwSwapBuffers((GLFWwindow*)m_impl_pointer);
 
-	
 	glfwPollEvents();
+
+	glClear(GL_COLOR_BUFFER_BIT);
 
 }
 

@@ -10,13 +10,14 @@
 #include "FrameBuffer.h"
 #include "Texture/Texture2D.h"
 
+#include "IndexBuffer.h"
+
 struct PostRenderingData {
 	Shader* post_processing_shader;
 	PostRenderingVertex vertices[4];
 	VertexBuffer* vertex_buffer;
 	Texture2D* texture;
-	int width = 1280; 
-	int height = 720;
+	IndexBuffer index_buffer;
 };
 
 class PostRenderer
@@ -31,8 +32,6 @@ public:
 	void Terminate();
 
 	void DrawFrameBufferColorAttachment(FrameBuffer* framebuffer);
-
-	void Resize(int width, int height);
 
 	PostRenderingData& GetData() {
 		return s_rendering_data;

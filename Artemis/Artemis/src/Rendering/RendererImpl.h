@@ -3,9 +3,10 @@
 #include "Vertex.h"
 #include "Color.h"
 
+#include "IndexBuffer.h"
 
 class VertexBuffer;
-class FrameBuffer;
+class Shader;
 
 class RendererImpl
 {
@@ -30,11 +31,11 @@ public:
 	virtual void DisableAlphaBlending() = 0;
 
 	virtual void EnableZBuffer() = 0;
-	virtual void DisableZBuffer() = 0;
+	virtual void DisableZBuffer() = 0; 
 
 	virtual void SetViewport(int x, int y, uint32_t width, uint32_t height) = 0;
 
-	virtual void DrawVertexBuffer(VertexBuffer* vb) = 0;
+	virtual void DrawVertexBuffer(VertexBuffer* vb, const IndexBuffer& buffer ) = 0;
 
 	virtual int GetTextureSlots() = 0;
 

@@ -39,6 +39,10 @@ private:
 
 	virtual void ClearColorAttachment(uint32_t index, int value) override;
 
+
+	// Geerbt über FrameBuffer
+	virtual void ClearColorAttachment(uint32_t index, const Color& color) override;
+
 };
 
 

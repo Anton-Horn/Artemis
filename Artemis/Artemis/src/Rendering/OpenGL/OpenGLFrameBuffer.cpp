@@ -188,7 +188,7 @@ FrameBufferSpecification& OpenGLFrameBuffer::GetSpec()
 
 uint32_t OpenGLFrameBuffer::GetColorAttachmentRendererID(int id)
 {
-	ART_ASSERT(id < m_color_attachments.size());
+	ART_ASSERT_S(id < m_color_attachments.size());
 	return m_color_attachments[id];
 }
 
@@ -215,7 +215,7 @@ int OpenGLFrameBuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
 
 void OpenGLFrameBuffer::ClearColorAttachment(uint32_t index, int value)
 {
-	ART_ASSERT(index < m_color_attachments.size());
+	ART_ASSERT_S(index < m_color_attachments.size());
 
 	auto& spec = m_color_attachment_specifications[index];
 
@@ -225,6 +225,22 @@ void OpenGLFrameBuffer::ClearColorAttachment(uint32_t index, int value)
 	else {
 		ART_ABORT("Tried to clear a non integer colorattachment with an int!");
 	}
+}
+
+void OpenGLFrameBuffer::ClearColorAttachment(uint32_t index, const Color& color)
+{
+
+	ART_ASSERT_S(index < m_color_attachments.size());
+
+	auto& spec = m_color_attachment_specifications[index];
+
+	if (spec.format == FramebufferTextureFormat::RGBA8) {
+		glClearTexImage(m_color_attachments[index], 0, GL_RGBA, GL_FLOAT, &color);
+	}
+	else {
+		ART_ABORT("Tried to clear a non integer colorattachment with an int!");
+	}
+
 }
 
 

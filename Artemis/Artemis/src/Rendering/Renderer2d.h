@@ -13,10 +13,8 @@ struct Renderer2dData {
 	RenderingAPI api;
 
 	FrameBuffer* frame_buffer;
-	Shader* shader;
-
-	const std::string vertex_source = "";
-	const std::string fragment_source = "";
+	Shader* QuadShader;
+	Shader* CircleShader;
 
 };
 

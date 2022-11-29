@@ -13,40 +13,45 @@ enum class IndexBufferType {
 	CHAR
 };
 
-template<typename T>
-struct IndexTriangle {
-
-	T index_0;
-	T index_1;
-	T index_2;
-
-};
-
-template<typename T>
-struct IndexBufferSpecification {
-
-	IndexBufferType type;
-	std::vector<IndexTriangle<T>> triangles;
-
-};
-
-template<typename T>
 class IndexBuffer {
 
 private:
 
-	IndexBufferSpecification<T> m_specification;
+	IndexBufferType m_index_buffer_type = IndexBufferType::UNSIGNED_INT;
+	uint32_t m_type_size = 0;
+	uint32_t m_indicies_count = 0;
+
+	void* m_data = nullptr;
 
 public:
 
-	IndexBuffer(IndexBufferSpecification<T>&& spec) {
-		m_specification = std::move(spec);
+	IndexBuffer() = default;
+	~IndexBuffer() {
+		delete[] m_data;
 	}
 
+	IndexBuffer(IndexBuffer&) = delete;
+	IndexBuffer& operator=(IndexBuffer& other) = delete;
 
-	T* GetDataPointer() {
-		return (T*) m_specification.triangles.data();
+	template<typename T>
+	void SetData(IndexBufferType data_type, T* data, uint32_t data_size) {
+		m_type_size = sizeof(T);
+		m_indicies_count = data_size / m_type_size;
+		m_index_buffer_type = data_type;
+		m_data = new uint8_t[data_size];
+		memcpy(m_data, data, data_size);
 	}
 
+	const void* GetDataPointer() const {
+		return m_data;
+	}
+
+	uint32_t GetIndiciesCount() const {
+		return m_indicies_count;
+	}
+
+	IndexBufferType GetType() const {
+		return m_index_buffer_type;
+	}
 
 };

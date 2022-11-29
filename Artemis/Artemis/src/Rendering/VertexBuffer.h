@@ -52,7 +52,7 @@ protected:
 	VertexBufferSpec m_specification;
 
 	void AllocateBuffer() {
-		m_vertex_array = new char[m_specification.buffer_size * m_specification.vertex_size];
+		m_vertex_array = new uint8_t[m_specification.buffer_size * m_specification.vertex_size];
 		m_next_vertex = m_vertex_array;
 	}
 

@@ -20,6 +20,7 @@ void Application::Run()
 	m_input.Init();
 
 	m_renderer2d.Init(RenderingAPI::OpenGL);
+	
 
 	m_post_renderer.Init(RenderingAPI::OpenGL);
 	

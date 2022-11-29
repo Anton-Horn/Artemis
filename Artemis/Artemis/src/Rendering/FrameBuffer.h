@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Core/Core.h"
-
 #include <vector>
+
+#include "Color.h"
 
 enum class FramebufferTextureFormat {
 	None = 0,
@@ -66,6 +67,7 @@ public:
 	static FrameBuffer* Create(const FrameBufferSpecification& spec, RenderingAPI api);
 
 	virtual void ClearColorAttachment(uint32_t index, int value) = 0;
+	virtual void ClearColorAttachment(uint32_t index, const Color& color) = 0;
 
 };
 

@@ -31,7 +31,11 @@ void PostRenderer::Init(RenderingAPI api)
 
     s_rendering_data.texture = Texture2D::Create(texture_spec, m_api);
 
-    s_rendering_data.post_processing_shader = Shader::Create();
+    s_rendering_data.post_processing_shader = Shader::Create(Shader::LoadShaderSource("Assets/Shaders/PostRenderingShader.vert"), Shader::LoadShaderSource("Assets/Shaders/PostRenderingShader.frag") , RenderingAPI::OpenGL);
+
+    uint32_t indices[] = {0, 1, 2, 2, 3, 0};
+    s_rendering_data.index_buffer.SetData(IndexBufferType::UNSIGNED_INT, indices, sizeof(indices));
+
 
 }
 
@@ -46,7 +50,7 @@ void PostRenderer::DrawFrameBufferColorAttachment(FrameBuffer* framebuffer)
 {
 
     RendererImpl* renderer = Application::GetRenderer2d().GetRendererImpl();
-    renderer->SetViewport(0, 0, s_rendering_data.width, s_rendering_data.height);
+    renderer->SetViewport(0, 0, framebuffer->GetSpec().width, framebuffer->GetSpec().height);
 
     renderer->SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
     renderer->Clear();
@@ -60,16 +64,11 @@ void PostRenderer::DrawFrameBufferColorAttachment(FrameBuffer* framebuffer)
 
     s_rendering_data.post_processing_shader->Bind();
     s_rendering_data.post_processing_shader->SetUniform1i(0, "u_sampler");
-    renderer->DrawVertexBuffer(s_rendering_data.vertex_buffer);
+    renderer->DrawVertexBuffer(s_rendering_data.vertex_buffer, s_rendering_data.index_buffer);
     s_rendering_data.post_processing_shader->UnBind();
 
     renderer->EnableZBuffer();
 
 }
 
-void PostRenderer::Resize(int width, int height)
-{
-    s_rendering_data.width = width;
-    s_rendering_data.height = height;
-}
 

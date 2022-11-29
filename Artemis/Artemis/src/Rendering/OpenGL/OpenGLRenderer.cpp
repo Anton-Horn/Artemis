@@ -125,21 +125,36 @@ void OpenGLRenderer::DisableZBuffer()
 	glDisable(GL_DEPTH_TEST);
 }
 
-void OpenGLRenderer::DrawVertexBuffer(VertexBuffer* vb)
+void OpenGLRenderer::DrawVertexBuffer(VertexBuffer* vertex_buffer, const IndexBuffer& index_buffer)
 {
 
-	if (vb->GetSpec().dynamic) {
-		vb->Bind();
-		glBufferSubData(GL_ARRAY_BUFFER, 0, vb->PlaceOccupied() * vb->GetSpec().vertex_size, vb->GetVertices());
-		glDrawElements(GL_TRIANGLES, (int)((vb->PlaceOccupied() / 4)) * 6, GL_UNSIGNED_INT, m_quad_indices);
+	vertex_buffer->Bind();
+	if (vertex_buffer->GetSpec().dynamic) {
+		glBufferSubData(GL_ARRAY_BUFFER, 0, vertex_buffer->PlaceOccupied() * vertex_buffer->GetSpec().vertex_size, vertex_buffer->GetVertices());	
+	}
 
-		vb->UnBind();
+	switch (index_buffer.GetType()) {
+	case IndexBufferType::UNSIGNED_CHAR: 
+		glDrawElements(GL_TRIANGLES, index_buffer.GetIndiciesCount(), GL_UNSIGNED_BYTE, index_buffer.GetDataPointer());
+		break;
+	case IndexBufferType::CHAR:
+		glDrawElements(GL_TRIANGLES, index_buffer.GetIndiciesCount(), GL_BYTE, index_buffer.GetDataPointer());
+		break;
+	case IndexBufferType::UNSIGNED_INT:
+		glDrawElements(GL_TRIANGLES, index_buffer.GetIndiciesCount(), GL_UNSIGNED_INT, index_buffer.GetDataPointer());
+		break;
+	case IndexBufferType::INT:
+		glDrawElements(GL_TRIANGLES, index_buffer.GetIndiciesCount(), GL_INT, index_buffer.GetDataPointer());
+		break;
+	case IndexBufferType::UNSIGNED_SHORT:
+		glDrawElements(GL_TRIANGLES, index_buffer.GetIndiciesCount(), GL_UNSIGNED_SHORT, index_buffer.GetDataPointer());
+		break;
+	case IndexBufferType::SHORT:
+		glDrawElements(GL_TRIANGLES, index_buffer.GetIndiciesCount(), GL_SHORT, index_buffer.GetDataPointer());
+		break;
 	}
-	else {
-		vb->Bind();
-		glDrawElements(GL_TRIANGLES, (int)((vb->PlaceOccupied() / 4)) * 6, GL_UNSIGNED_INT, m_quad_indices);
-		vb->UnBind();
-	}
+	vertex_buffer->UnBind();
+
 }
 
 int OpenGLRenderer::GetTextureSlots()

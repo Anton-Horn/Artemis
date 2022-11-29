@@ -34,6 +34,8 @@ OpenGLShader::OpenGLShader(const std::string& vertex_source, const std::string& 
 
 		glGetShaderInfoLog(VertexID, length, &length, message);
 
+		ART_LOG(vertex_source.c_str());
+
 		ART_ABORT("[OpenGL VertexShader compilation error] {0}", message);
 
 		delete[] message;
