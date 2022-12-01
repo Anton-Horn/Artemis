@@ -35,8 +35,6 @@ void Application::Run()
 
 void Application::Terminate()
 {
-	m_post_renderer.Terminate();
-	m_renderer2d.Terminate();
 	m_window.Terminate();
 }
 

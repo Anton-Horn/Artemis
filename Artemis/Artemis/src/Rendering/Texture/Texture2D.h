@@ -43,7 +43,7 @@ public:
 	//return value must be deleted
 	static uint8_t* LoadTexture(const std::string& file_name, int& width, int& height, int& bits_per_pixel, RenderingAPI api);
 
-	static Texture2D* Create(const Texture2DSpecification& spec, RenderingAPI api);
+	static std::shared_ptr<Texture2D> Create(const Texture2DSpecification& spec, RenderingAPI api);
 
 	Texture2D();
 	virtual ~Texture2D() = default;

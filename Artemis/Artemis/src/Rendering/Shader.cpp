@@ -29,11 +29,11 @@ std::string Shader::LoadShaderSource(const std::filesystem::path& path)
 	return content;
 }
 
-Shader* Shader::Create(const std::string& VertexSource, const std::string& FragmentSource, RenderingAPI api)
+std::shared_ptr<Shader> Shader::Create(const std::string& VertexSource, const std::string& FragmentSource, RenderingAPI api)
 {
 
 	if (api == RenderingAPI::OpenGL) {
-		return new OpenGLShader(VertexSource, FragmentSource);
+		return std::make_shared<OpenGLShader>(VertexSource, FragmentSource);
 	}
 	return nullptr;
 

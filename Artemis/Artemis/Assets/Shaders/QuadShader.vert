@@ -15,5 +15,5 @@ void main()
 	v_color = a_color;
 	v_position = a_position;
 	v_uv = a_uv;
-	gl_Position = u_projection_matrix * vec4(a_position.x, a_position.y, a_position.z, 1.0f);
+	gl_Position = u_projection_matrix * vec4(a_position, 1.0f);
 }

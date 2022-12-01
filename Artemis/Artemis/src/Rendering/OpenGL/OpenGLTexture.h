@@ -22,9 +22,9 @@ public:
 
 private:
 
-	int m_bits_per_pixel;
+	int m_bits_per_pixel = 0;
 
-	uint32_t m_gl_texture_id;
+	uint32_t m_gl_texture_id = 0;
 
 	void SetTextureFilters(const Texture2DSpecification& spec);
 

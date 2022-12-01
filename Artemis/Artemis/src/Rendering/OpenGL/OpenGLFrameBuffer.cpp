@@ -9,7 +9,8 @@
 
 static GLenum TextureTarget(bool multisampled)
 {
-	return multisampled ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D;
+	if (multisampled) return GL_TEXTURE_2D_MULTISAMPLE;
+	return GL_TEXTURE_2D;
 }
 
 static void CreateTextures(bool multisampled, uint32_t* outID, uint32_t count)
@@ -27,7 +28,7 @@ static void AttachColorTexture(uint32_t id, int samples, GLenum internal_format,
 	bool multisampled = samples > 1;
 	if (multisampled)
 	{
-		glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, internal_format, width, height, GL_FALSE);
+		glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, internal_format, width, height, GL_TRUE);
 	}
 	else
 	{
@@ -112,7 +113,6 @@ void OpenGLFrameBuffer::Invalidate()
 	glBindFramebuffer(GL_FRAMEBUFFER, m_frame_buffer_id);
 
 	bool multisample = m_specification.samples > 1;
-
 	// Attachments
 	if (m_color_attachment_specifications.size())
 	{
@@ -241,6 +241,22 @@ void OpenGLFrameBuffer::ClearColorAttachment(uint32_t index, const Color& color)
 		ART_ABORT("Tried to clear a non integer colorattachment with an int!");
 	}
 
+}
+
+void OpenGLFrameBuffer::CopyColorAttachmentsIntoBuffer(std::weak_ptr<FrameBuffer> w_framebuffer)
+{
+	auto framebuffer = GetSharedPointer(w_framebuffer);
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, framebuffer->GetRendererID());
+	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, m_frame_buffer_id);
+
+	ART_ASSERT_S((framebuffer->GetSpec().width == m_specification.width) && (framebuffer->GetSpec().height == m_specification.height))
+	glBlitFramebuffer(0, 0, m_specification.width, m_specification.height, 0, 0, m_specification.width, m_specification.height, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+uint32_t OpenGLFrameBuffer::GetRendererID()
+{
+	return m_frame_buffer_id;
 }
 
 

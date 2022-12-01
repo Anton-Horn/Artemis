@@ -35,11 +35,11 @@ public:
 
 	virtual void SetViewport(int x, int y, uint32_t width, uint32_t height) = 0;
 
-	virtual void DrawVertexBuffer(VertexBuffer* vb, const IndexBuffer& buffer ) = 0;
+	virtual void DrawVertexBuffer(std::weak_ptr<VertexBuffer> vb, const IndexBuffer& buffer ) = 0;
 
 	virtual int GetTextureSlots() = 0;
 
-	static RendererImpl* Create(RenderingAPI api);
+	static std::shared_ptr<RendererImpl> Create(RenderingAPI api);
 
 };
 

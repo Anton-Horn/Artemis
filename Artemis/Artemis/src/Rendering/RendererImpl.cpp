@@ -2,11 +2,11 @@
 
 #include "OpenGL/OpenGLRenderer.h"
 
-RendererImpl* RendererImpl::Create(RenderingAPI api)
+std::shared_ptr<RendererImpl> RendererImpl::Create(RenderingAPI api)
 {
 
 	if (api == RenderingAPI::OpenGL) {
-		return new OpenGLRenderer();
+		return std::make_shared<OpenGLRenderer>();
 	}
 
 	return nullptr;

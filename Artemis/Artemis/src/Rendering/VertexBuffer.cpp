@@ -2,18 +2,18 @@
 #include "Rendering/OpenGL/OpenGLVertexBuffer.h"
 
 
-VertexBuffer* VertexBuffer::Create(const VertexBufferSpec& spec, RenderingAPI api)
+std::shared_ptr<VertexBuffer> VertexBuffer::Create(const VertexBufferSpec& spec, RenderingAPI api)
 {
     if (api == RenderingAPI::OpenGL) {
-        return new OpenGLVertexBuffer(spec);
+        return std::make_shared<OpenGLVertexBuffer>(spec);
     }
     return nullptr;
 }
 
-VertexBuffer* VertexBuffer::Create(const VertexBufferSpec& spec, void* data, RenderingAPI api)
+std::shared_ptr<VertexBuffer>VertexBuffer::Create(const VertexBufferSpec& spec, void* data, RenderingAPI api)
 {
     if (api == RenderingAPI::OpenGL) {
-        return new OpenGLVertexBuffer(spec, data);
+        return std::make_shared<OpenGLVertexBuffer>(spec, data);
     }
     return nullptr;
 }

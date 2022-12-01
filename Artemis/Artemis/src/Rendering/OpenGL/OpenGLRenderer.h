@@ -20,7 +20,7 @@ public:
 
 	virtual void BeginInit() override;
 	virtual void EndInit() override;
-	virtual void DrawVertexBuffer(VertexBuffer* vertex_buffer, const IndexBuffer& index_buffer) override;
+	virtual void DrawVertexBuffer(std::weak_ptr<VertexBuffer> vertex_buffer, const IndexBuffer& index_buffer) override;
 	virtual int GetTextureSlots() override;
 
 	virtual void SetMaxQuads(size_t count) override;

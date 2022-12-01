@@ -61,7 +61,6 @@ void OpenGLRenderer::BeginInit()
 
 	glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
-
 	//Quad index Buffer
 	m_quad_indices = nullptr;
 	m_quad_indices = new unsigned int[m_max_quads * 6];
@@ -125,12 +124,13 @@ void OpenGLRenderer::DisableZBuffer()
 	glDisable(GL_DEPTH_TEST);
 }
 
-void OpenGLRenderer::DrawVertexBuffer(VertexBuffer* vertex_buffer, const IndexBuffer& index_buffer)
+void OpenGLRenderer::DrawVertexBuffer(std::weak_ptr<VertexBuffer> vertex_buffer, const IndexBuffer& index_buffer)
 {
+	std::shared_ptr<VertexBuffer> shared_vertex_buffer = GetSharedPointer(vertex_buffer);
 
-	vertex_buffer->Bind();
-	if (vertex_buffer->GetSpec().dynamic) {
-		glBufferSubData(GL_ARRAY_BUFFER, 0, vertex_buffer->PlaceOccupied() * vertex_buffer->GetSpec().vertex_size, vertex_buffer->GetVertices());	
+	shared_vertex_buffer->Bind();
+	if (shared_vertex_buffer->GetSpec().dynamic) {
+		glBufferSubData(GL_ARRAY_BUFFER, 0, shared_vertex_buffer->PlaceOccupied() * shared_vertex_buffer->GetSpec().vertex_size, shared_vertex_buffer->GetVertices());
 	}
 
 	switch (index_buffer.GetType()) {
@@ -153,7 +153,7 @@ void OpenGLRenderer::DrawVertexBuffer(VertexBuffer* vertex_buffer, const IndexBu
 		glDrawElements(GL_TRIANGLES, index_buffer.GetIndiciesCount(), GL_SHORT, index_buffer.GetDataPointer());
 		break;
 	}
-	vertex_buffer->UnBind();
+	shared_vertex_buffer->UnBind();
 
 }
 

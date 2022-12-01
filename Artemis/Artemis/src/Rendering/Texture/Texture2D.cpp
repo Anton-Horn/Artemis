@@ -13,11 +13,11 @@ uint8_t* Texture2D::LoadTexture(const std::string& file_name, int& width, int& h
 }
 
 
-Texture2D* Texture2D::Create(const Texture2DSpecification& spec, RenderingAPI api)
+std::shared_ptr<Texture2D> Texture2D::Create(const Texture2DSpecification& spec, RenderingAPI api)
 {
 
 	if (api == RenderingAPI::OpenGL) {
-		return new OpenGLTexture(spec);
+		return std::make_shared<OpenGLTexture>(spec);
 	}
 
 	return nullptr;

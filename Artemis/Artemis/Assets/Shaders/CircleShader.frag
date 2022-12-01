@@ -7,8 +7,8 @@ in vec2 v_uv;
 
 void main() 
 {
-    vec2 position = v_uv * 2.0f - 1.0f;
+ 	vec2 position = v_uv * 2.0f - 1.0f;
 	float distance = 1.0 - length(position);
-	vec3 color = vec3(smoothstep(0.0f, 0.01f, distance));
+	vec3 color = vec3(distance / fwidth(distance));
 	o_Color = vec4(color * v_color.rgb, color.r);
 };

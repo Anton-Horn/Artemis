@@ -61,7 +61,7 @@ OpenGLVertexBuffer::OpenGLVertexBuffer(const VertexBufferSpec& spec, void* data)
 
 	glGenVertexArrays(1, &m_vao_id);
 	glBindVertexArray(m_vao_id);
-
+	
 	glGenBuffers(1, &m_vb_id);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vb_id);
 	glBufferData(GL_ARRAY_BUFFER, m_specification.buffer_size * m_specification.vertex_size, data, GL_STATIC_DRAW);
@@ -94,18 +94,18 @@ OpenGLVertexBuffer::OpenGLVertexBuffer(const VertexBufferSpec& spec, void* data)
 		}
 		index++;
 	}
-
+	
 	UnBind();
 
 	m_vertex_array = data;
 	m_vertex_counter = (int) m_specification.buffer_size;
-	glBindVertexArray(0);
-
+	
 }
 
 OpenGLVertexBuffer::~OpenGLVertexBuffer()
 {
 	glDeleteBuffers(1, &m_vb_id);
+	glDeleteVertexArrays(1, &m_vao_id);
 }
 
 

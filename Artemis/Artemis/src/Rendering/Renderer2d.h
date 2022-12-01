@@ -9,12 +9,12 @@ class Shader;
 
 struct Renderer2dData {
 
-	RendererImpl* renderer_impl;
+	std::shared_ptr<RendererImpl> renderer_impl;
 	RenderingAPI api;
 
-	FrameBuffer* frame_buffer;
-	Shader* QuadShader;
-	Shader* CircleShader;
+	std::shared_ptr<FrameBuffer> frame_buffer;
+	std::shared_ptr<Shader> quad_shader;
+	std::shared_ptr<Shader> circle_shader;
 
 };
 
@@ -27,11 +27,10 @@ private:
 public:
 
 	void Init(RenderingAPI api);
-	void Terminate();
 
 	void Test();
 
-	RendererImpl* GetRendererImpl();
-	FrameBuffer* GetFrameBuffer();
+	std::weak_ptr<RendererImpl> GetRendererImpl();
+	std::weak_ptr<FrameBuffer> GetFrameBuffer();
 
 };

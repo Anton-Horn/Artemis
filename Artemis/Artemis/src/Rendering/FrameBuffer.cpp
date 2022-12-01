@@ -2,11 +2,12 @@
 #include "FrameBuffer.h"
 #include "Rendering\OpenGL\OpenGLFrameBuffer.h"
 
-FrameBuffer* FrameBuffer::Create(const FrameBufferSpecification& spec, RenderingAPI api)
+std::shared_ptr<FrameBuffer> FrameBuffer::Create(const FrameBufferSpecification& spec, RenderingAPI api)
 {
 	
 	if (api == RenderingAPI::OpenGL) {
-		return new OpenGLFrameBuffer(spec);
+		return std::make_shared<OpenGLFrameBuffer>(spec);
 	}
 	return nullptr;
 }
+

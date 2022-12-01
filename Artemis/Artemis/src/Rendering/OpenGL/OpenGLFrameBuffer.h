@@ -39,9 +39,11 @@ private:
 
 	virtual void ClearColorAttachment(uint32_t index, int value) override;
 
-
-	// Geerbt über FrameBuffer
 	virtual void ClearColorAttachment(uint32_t index, const Color& color) override;
+
+	virtual void CopyColorAttachmentsIntoBuffer(std::weak_ptr<FrameBuffer> w_framebuffer) override;
+
+	virtual uint32_t GetRendererID() override;
 
 };
 

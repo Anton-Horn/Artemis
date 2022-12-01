@@ -18,12 +18,14 @@ struct VertexAttrib {
 	VertexBufferDataType data_type;
 	size_t data_count;
 	VertexAttrib() = default;
+	~VertexAttrib() = default;
 };
 
 struct VertexAttributes {
 	std::vector<VertexAttrib> attributes;
-	VertexAttributes(std::initializer_list<VertexAttrib> attributes) : attributes(attributes) {}
+	//VertexAttributes(std::initializer_list<VertexAttrib> attributes) : attributes(attributes) {}
 	VertexAttributes() = default;
+	~VertexAttributes() = default;
 };
 
 struct VertexBufferSpec {
@@ -35,6 +37,8 @@ struct VertexBufferSpec {
 		buffer_size = 0;
 		vertex_size = 0;
 	}
+	~VertexBufferSpec() = default;
+	
 };
 
 class VertexBuffer
@@ -106,8 +110,8 @@ public:
 		return m_specification;
 	}
 
-	static VertexBuffer* Create(const VertexBufferSpec& spec, RenderingAPI api);
-	static VertexBuffer* Create(const VertexBufferSpec& spec, void* data, RenderingAPI api);
+	static std::shared_ptr<VertexBuffer> Create(const VertexBufferSpec& spec, RenderingAPI api);
+	static std::shared_ptr<VertexBuffer> Create(const VertexBufferSpec& spec, void* data, RenderingAPI api);
 
 };
 

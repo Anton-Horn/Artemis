@@ -57,6 +57,8 @@ public:
 
 	virtual uint32_t GetColorAttachmentRendererID(int id) = 0;
 
+	virtual uint32_t GetRendererID() = 0;
+
 	virtual void Resize(uint32_t width, uint32_t height) = 0;
 
 	virtual const FrameBufferSpecification& GetSpec() const = 0;
@@ -64,10 +66,12 @@ public:
 
 	virtual int ReadPixel(uint32_t attachmentIndex, int x, int y) = 0; 
 
-	static FrameBuffer* Create(const FrameBufferSpecification& spec, RenderingAPI api);
+	static std::shared_ptr<FrameBuffer> Create(const FrameBufferSpecification& spec, RenderingAPI api);
 
 	virtual void ClearColorAttachment(uint32_t index, int value) = 0;
 	virtual void ClearColorAttachment(uint32_t index, const Color& color) = 0;
+
+	virtual void CopyColorAttachmentsIntoBuffer(std::weak_ptr<FrameBuffer> framebuffer) = 0;
 
 };
 
