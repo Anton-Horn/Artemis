@@ -16,21 +16,28 @@ enum class WrapBehavior {
 	MirrorRepeat
 }; 
 
+enum class TextureDataFormat {
+	RGBA8,
+	RED
+};
+
 struct Texture2DSpecification {
 
 	WrapBehavior wrap_behavior = WrapBehavior::Repeat;
 	TextureFilter mag_filter = TextureFilter::Nearest;
 	TextureFilter min_filter = TextureFilter::Nearest;
+	TextureDataFormat data_format = TextureDataFormat::RGBA8;
+
 	uint32_t width = 0;
 	uint32_t height = 0;
 	uint32_t bits_per_pixel = 0;
 
 	std::string file_name;
-	bool load_file = true;
+	bool load_file = false;
 
 	uint8_t* data = nullptr;
 
-	bool store_image_data = true;
+	bool store_image_data = false;
 	bool allow_texture_pointer = false;
 
 };

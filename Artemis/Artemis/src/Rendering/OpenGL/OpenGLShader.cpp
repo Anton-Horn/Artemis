@@ -6,13 +6,14 @@
 
 #include "Core/Debug_Test.h"
 
-unsigned int OpenGLShader::GetUniformLocation(const char* uname) const
+OpenGLShader::OpenGLShader(const ShaderSpecification& spec)
 {
-	return glGetUniformLocation(m_shader_id, uname);
-}
+	
+	m_spec = std::move(spec);
 
-OpenGLShader::OpenGLShader(const std::string& vertex_source, const std::string& fragment_source)
-{
+	std::string vertex_source = std::move(Shader::LoadShaderSource(m_spec.vertex_path));
+	std::string fragment_source = std::move(Shader::LoadShaderSource(m_spec.fragment_path));
+
 	m_shader_id = glCreateProgram();
 
 	GLuint VertexID = glCreateShader(GL_VERTEX_SHADER);
@@ -77,12 +78,22 @@ OpenGLShader::OpenGLShader(const std::string& vertex_source, const std::string& 
 	glDeleteShader(VertexID);
 	glDeleteShader(FragID);
 
+	Bind();
+
+	for (auto& [key, uniform] : m_spec.uniforms) {
+		uniform.uniform_location = glGetUniformLocation(m_shader_id, uniform.name.c_str());
+	}
+
 }
 
 OpenGLShader::~OpenGLShader()
 {
 	glDeleteProgram(m_shader_id);
 }
+
+#ifdef 0
+
+
 
 void OpenGLShader::SetUniform1f(float f, const char* uname) const
 {
@@ -92,10 +103,14 @@ void OpenGLShader::SetUniform1f(float f, const char* uname) const
 
 void OpenGLShader::SetUniform2f(float f1, float f2, const char* uname) const
 {
+	GLuint id = GetUniformLocation(uname);
+	glUniform2f(id, f1, f2);
 }
 
 void OpenGLShader::SetUniform3f(float f1, float f2, float f3, const char* uname) const
 {
+	GLuint id = GetUniformLocation(uname);
+	glUniform3f(id, f1, f2, f3);
 }
 
 void OpenGLShader::SetUniform4f(float f1, float f2, float f3, float f4, const char* uname) const
@@ -207,7 +222,7 @@ void OpenGLShader::SetUniformMatrix2x4(int count, const float* data, const char*
 void OpenGLShader::SetUniformMatrix3x4(int count, const float* data, const char* uname) const
 {
 }
-
+#endif // 0
 void OpenGLShader::Bind() const
 {
 	glUseProgram(m_shader_id);

@@ -8,3 +8,6 @@
 [submodule "Artemis/Artemis/libs/glm"]
 	path = Artemis/Artemis/libs/glm
 	url = https://github.com/Grobiani/glm
+[submodule "Artemis/Artemis/libs/freetype"]
+	path = Artemis/Artemis/libs/freetype
+	url = https://github.com/Grobiani/freetype

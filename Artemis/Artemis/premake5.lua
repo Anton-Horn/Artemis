@@ -16,12 +16,14 @@ includedirs {
     lib_includes[1],
     lib_includes[2],
     lib_includes[3],
-    lib_includes[4]
+    lib_includes[4],
+    lib_includes[5]
 }
 
 links {
     "glfw",
     "glad",
+    "freetype",
     "opengl32.lib"
 }
 

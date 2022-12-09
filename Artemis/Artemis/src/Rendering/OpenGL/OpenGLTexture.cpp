@@ -31,6 +31,8 @@ uint8_t* OpenGLTexture::LoadTexture(const std::string& file_name, int& width, in
 OpenGLTexture::OpenGLTexture(const Texture2DSpecification& spec)
 {
 
+	m_specification = spec;
+
 	if (spec.load_file) {
 
 		m_file_name = spec.file_name;
@@ -47,7 +49,8 @@ OpenGLTexture::OpenGLTexture(const Texture2DSpecification& spec)
 
 		SetTextureFilters(spec);
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_texture_data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GetDataInternalFormat(), m_width, m_height, 0, GetDataFormat(), GL_UNSIGNED_BYTE, m_texture_data);
+
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		if (!spec.store_image_data)
@@ -83,7 +86,7 @@ OpenGLTexture::OpenGLTexture(const Texture2DSpecification& spec)
 			ptr[i] = 0xffffffff;
 		}
 
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_texture_data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GetDataInternalFormat(), m_width, m_height, 0, GetDataFormat(), GL_UNSIGNED_BYTE, m_texture_data);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		if (!spec.store_image_data)
@@ -102,7 +105,7 @@ OpenGLTexture::OpenGLTexture(const Texture2DSpecification& spec)
 
 	SetTextureFilters(spec);
 
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, spec.data);
+	glTexImage2D(GL_TEXTURE_2D, 0, GetDataInternalFormat(), m_width, m_height, 0, GetDataFormat(), GL_UNSIGNED_BYTE, spec.data);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	
 	if (spec.store_image_data) {
@@ -130,6 +133,20 @@ void OpenGLTexture::CreateTexturePointer(uint32_t TextureRendererID)
 {
 	m_gl_texture_id = TextureRendererID;
 	m_delete_on_construct = false;
+}
+
+int OpenGLTexture::GetDataFormat()
+{
+	if (m_specification.data_format == TextureDataFormat::RED) return GL_RED_INTEGER;
+	if (m_specification.data_format == TextureDataFormat::RGBA8) return GL_RGBA;
+	ART_ASSERT_S(false);
+}
+
+int OpenGLTexture::GetDataInternalFormat()
+{
+	if (m_specification.data_format == TextureDataFormat::RED) return GL_RED;
+	if (m_specification.data_format == TextureDataFormat::RGBA8) return GL_RGBA8;
+	ART_ASSERT_S(false);
 }
 
 void OpenGLTexture::SetTextureFilters(const Texture2DSpecification& spec)

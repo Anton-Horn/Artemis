@@ -8,76 +8,15 @@ class OpenGLShader : public Shader
 
 private:
 
-	unsigned int m_shader_id;
-
-	unsigned int GetUniformLocation(const char* uname) const;
+	uint32_t m_shader_id;
 
 public:
 
-	OpenGLShader(const std::string& vertex_source, const std::string& fragment_source);
+	OpenGLShader(const ShaderSpecification& spec);
 	~OpenGLShader();
 
 	virtual void Bind() const override;
-
 	virtual void UnBind() const override;
-
-	virtual void SetUniform1f(float f, const char* uname) const override;
-
-	virtual void SetUniform2f(float f1, float f2, const char* uname) const override;
-
-	virtual void SetUniform3f(float f1, float f2, float f3, const char* uname) const override;
-
-	virtual void SetUniform4f(float f1, float f2, float f3, float f4, const char* uname) const override;
-
-	virtual void SetUniform1i(int i, const char* uname) const override;
-
-	virtual void SetUniform2i(int i1, int i2, const char* uname) const override;
-
-	virtual void SetUniform3i(int i1, int i2, int i3, const char* uname) const override;
-
-	virtual void SetUniform4i(int i1, int i2, int i3, int i4, const char* uname) const override;
-
-	virtual void SetUniform1ui(unsigned int i, const char* uname) const override;
-
-	virtual void SetUniform2ui(unsigned int i1, unsigned int i2, const char* uname) const override;
-
-	virtual void SetUniform3ui(unsigned int i1, unsigned int i2, unsigned int i3, const char* uname) const override;
-
-	virtual void SetUniform4ui(unsigned int i1, unsigned int i2, unsigned int i3, unsigned int i4, const char* uname) const override;
-
-	virtual void SetUniform1fa(int count, const float* data, const char* uname) const override;
-
-	virtual void SetUniform2fa(int count, const float* data, const char* uname) const override;
-
-	virtual void SetUniform3fa(int count, const float* data, const char* uname) const override;
-
-	virtual void SetUniform4fa(int count, const float* data, const char* uname) const override;
-
-	virtual void SetUniform1ia(int count, const int* data, const char* uname) const override;
-
-	virtual void SetUniform2ia(int count, const int* data, const char* uname) const override;
-
-	virtual void SetUniform3ia(int count, const int* data, const char* uname) const override;
-
-	virtual void SetUniform4ia(int count, const int* data, const char* uname) const override;
-
-	virtual void SetUniformMatrix2x2(int count, const float* data, const char* uname) const override;
-
-	virtual void SetUniformMatrix3x3(int count, const float* data, const char* uname) const override;
-
-	virtual void SetUniformMatrix4x4(int count, const float* data, const char* uname) const override;
-
-	virtual void SetUniformMatrix3x2(int count, const float* data, const char* uname) const override;
-
-	virtual void SetUniformMatrix4x2(int count, const float* data, const char* uname) const override;
-
-	virtual void SetUniformMatrix2x3(int count, const float* data, const char* uname) const override;
-
-	virtual void SetUniformMatrix4x3(int count, const float* data, const char* uname) const override;
-
-	virtual void SetUniformMatrix2x4(int count, const float* data, const char* uname) const override;
-
-	virtual void SetUniformMatrix3x4(int count, const float* data, const char* uname) const override;
 
 };
 

@@ -5,6 +5,43 @@
 
 #include <filesystem>
 
+#include <unordered_map>
+
+enum class UniformDataType {
+
+	Int,
+	Int2,
+	Int3, 
+	Int4,
+	UInt,
+	UInt2,
+	UInt3,
+	UInt4,
+	Float,
+	Float2,
+	Float3,
+	Float4,
+	Mat4,
+
+};
+
+struct Uniform {
+	std::string name;
+	UniformDataType type;
+	uint32_t uniform_location;
+};
+
+
+struct ShaderSpecification {
+
+	std::unordered_map<std::string, Uniform> uniforms;
+	std::filesystem::path fragment_path;
+	std::filesystem::path vertex_path;
+
+	ShaderSpecification() = default;
+
+};
+
 class Shader
 {
 	
@@ -16,47 +53,55 @@ public:
 	virtual void Bind() const = 0;
 	virtual void UnBind() const = 0;
 
-	virtual void SetUniform1f(float f, const char* uname) const = 0;
-	virtual void SetUniform2f(float f1, float f2, const char* uname) const = 0;
-	virtual void SetUniform3f(float f1, float f2, float f3, const char* uname) const = 0;
-	virtual void SetUniform4f(float f1, float f2, float f3, float f4, const char* uname) const = 0;
+	template<typename T>
+	void SetUniform(std::string_view name, const T& value) {
 
-	virtual void SetUniform1i(int i, const char* uname) const = 0;
-	virtual void SetUniform2i(int i1, int i2, const char* uname) const = 0;
-	virtual void SetUniform3i(int i1, int i2, int i3, const char* uname) const = 0;
-	virtual void SetUniform4i(int i1, int i2, int i3, int i4, const char* uname) const = 0;
+		ART_ASSERT_S(m_spec.uniforms.find(name) != m_spec.uniforms.end);
 
-	virtual void SetUniform1ui(unsigned int i, const char* uname) const = 0;
-	virtual void SetUniform2ui(unsigned int i1, unsigned int i2, const char* uname) const = 0;
-	virtual void SetUniform3ui(unsigned int i1, unsigned int i2, unsigned int i3, const char* uname) const = 0;
-	virtual void SetUniform4ui(unsigned int i1, unsigned int i2, unsigned int i3, unsigned int i4, const char* uname) const = 0;
+		Uniform& uniform = m_spec.uniforms.at(name);
+		switch (uniform.type) {
 
-	virtual void SetUniform1fa(int count, const float* data, const char* uname) const = 0;
-	virtual void SetUniform2fa(int count, const float* data, const char* uname) const = 0;
-	virtual void SetUniform3fa(int count, const float* data, const char* uname) const = 0;
-	virtual void SetUniform4fa(int count, const float* data, const char* uname) const = 0;
-							 
-	virtual void SetUniform1ia(int count, const int* data, const char* uname) const = 0;
-	virtual void SetUniform2ia(int count, const int* data, const char* uname) const = 0;
-	virtual void SetUniform3ia(int count, const int* data, const char* uname) const = 0;
-	virtual void SetUniform4ia(int count, const int* data, const char* uname) const = 0;
+		case UniformDataType::Float:
+			break;
+		case UniformDataType::Float2:
+			break;
+		case UniformDataType::Float3:
+			break;
+		case UniformDataType::Float4:
+			break;
+		case UniformDataType::Int:
+			break;
+		case UniformDataType::Int2:
+			break;
+		case UniformDataType::Int3:
+			break;
+		case UniformDataType::Int4:
+			break;
+		case UniformDataType::Mat4:
+			break;
+		case UniformDataType::UInt:
+			break;
+		case UniformDataType::UInt2:
+			break;
+		case UniformDataType::UInt3:
+			break;
+		case UniformDataType::UInt4:
+			break;
 
-	virtual void SetUniformMatrix2x2(int count, const float* data, const char* uname) const = 0;
-	virtual void SetUniformMatrix3x3(int count, const float* data, const char* uname) const = 0;
-	virtual void SetUniformMatrix4x4(int count, const float* data, const char* uname) const = 0;
+		}
 
-	virtual void SetUniformMatrix3x2(int count, const float* data, const char* uname) const = 0;
-	virtual void SetUniformMatrix4x2(int count, const float* data, const char* uname) const = 0;
+	}
 
-	virtual void SetUniformMatrix2x3(int count, const float* data, const char* uname) const = 0;
-	virtual void SetUniformMatrix4x3(int count, const float* data, const char* uname) const = 0;
+	static std::shared_ptr<Shader> Create(const ShaderSpecification& spec, RenderingAPI api);
 
-	virtual void SetUniformMatrix2x4(int count, const float* data, const char* uname) const = 0;
-	virtual void SetUniformMatrix3x4(int count, const float* data, const char* uname) const = 0;
+private:
+
+protected:	
+
+	virtual void SetUniformImpl(std::string_view name, const void* const data_ptr);
 
 	static std::string LoadShaderSource(const std::filesystem::path& path);
-	static std::shared_ptr<Shader> Create(const std::string& VertexSource, const std::string& FragmentSource, RenderingAPI api);
-
+	ShaderSpecification m_spec;
 };
 
 
